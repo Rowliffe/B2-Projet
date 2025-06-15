@@ -4,8 +4,12 @@ import { Link, Outlet, useLocation } from 'react-router-dom';
 import '../styles/home.css';
 
 export default function TwitterLikeInterface() {
-    const [activeTab, setActiveTab] = useState('home');
-    const location = useLocation();
+    const location = useLocation(); // récupère le chemin actuel
+    const [activeTab, setActiveTab] = useState(location.pathname.slice(1)); // initialise en fonction de l'URL
+
+    const handleTabClick = (tabName) => {
+        setActiveTab(tabName);
+    };
 
     const posts = [
         { id: 1, username: 'User  1', handle: '@newuser', description: 'Description du Post', time: '5m', stats: { likes: '520', retweets: '200' } },
@@ -63,13 +67,25 @@ export default function TwitterLikeInterface() {
             {/* Main Content */}
             <div className="main-content">
                 <div className="header">
-                    <Link to="/decouvrir" className={`header-tab ${activeTab === 'decouvrir' ? 'active' : ''}`}>
+                    <Link
+                        to="/decouvrir"
+                        className={`header-tab ${activeTab === 'decouvrir' ? 'active' : ''}`}
+                        onClick={() => handleTabClick('decouvrir')}
+                    >
                         Découvrir
                     </Link>
-                    <Link to="/home" className={`header-tab ${activeTab === 'home' ? 'active' : ''}`}>
+                    <Link
+                        to="/home"
+                        className={`header-tab ${activeTab === 'home' ? 'active' : ''}`}
+                        onClick={() => handleTabClick('home')}
+                    >
                         Home
                     </Link>
-                    <Link to="/suivis" className={`header-tab ${activeTab === 'suivis' ? 'active' : ''}`}>
+                    <Link
+                        to="/suivis"
+                        className={`header-tab ${activeTab === 'suivis' ? 'active' : ''}`}
+                        onClick={() => handleTabClick('suivis')}
+                    >
                         Suivis
                     </Link>
                 </div>
