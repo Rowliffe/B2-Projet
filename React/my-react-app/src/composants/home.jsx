@@ -61,7 +61,9 @@ export default function TwitterLikeInterface() {
                     <User  size={24} />
                     <span>Profile</span>
                 </Link>
-                <button className="add-post-btn">ADD A POST</button>
+                <Link to="/addpost" className={`add-post-btn`}>
+                    <button className="add-post-btn">ADD A POST</button>
+                </Link>
             </div>
 
             {/* Main Content */}

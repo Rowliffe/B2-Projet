@@ -63,6 +63,10 @@ const LoginPage = () => {
                         >
                             mot de passe oublié
                         </button>
+                        <Link to="/register" className="forgot-password-btn">
+                            Pas encore inscrit ?
+                        </Link>
+
                     </div>
                     <button
                         onClick={handleSubmit}

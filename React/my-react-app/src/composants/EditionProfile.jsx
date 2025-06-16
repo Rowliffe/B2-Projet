@@ -12,48 +12,48 @@ const trends = [
 ];
 
 const Sidebar = () => (
-    <div className="sidebar">
-        <div className="sidebar-logo">
+    <div className="sidebar d-none d-md-flex flex-column p-3 border-end min-vh-100">
+        <div className="sidebar-logo mb-4">
             <span>L</span>
         </div>
-        <Link to="/home" className="sidebar-item">
+        <Link to="/home" className="sidebar-item mb-2">
             <Home size={24} />
             <span>Home</span>
         </Link>
-        <Link to="/messages" className="sidebar-item">
+        <Link to="/messages" className="sidebar-item mb-2">
             <MessageCircle size={24} />
             <span>Messages</span>
         </Link>
-        <Link to="/search" className="sidebar-item">
+        <Link to="/search" className="sidebar-item mb-2">
             <Search size={24} />
             <span>Search</span>
         </Link>
-        <Link to="/settings" className="sidebar-item active">
+        <Link to="/settings" className="sidebar-item mb-2 active">
             <Settings size={24} />
             <span>Settings</span>
         </Link>
-        <Link to="/profile" className="sidebar-item">
+        <Link to="/profile" className="sidebar-item mb-2">
             <User size={24} />
             <span>Profile</span>
         </Link>
-        <button className="add-post-btn">ADD A POST</button>
+        <button className="add-post-btn btn btn-primary mt-3">ADD A POST</button>
     </div>
 );
 
 const RightSidebar = () => (
-    <div className="right-sidebar">
-        <div className="search-bar">
-            <Search size={20} color="#8899a6" />
-            <input className="search-input" placeholder="Search something" />
+    <div className="right-sidebar d-none d-lg-block border-start p-3 min-vh-100">
+        <div className="search-bar mb-4 d-flex align-items-center">
+            <Search size={20} color="#8899a6" className="me-2" />
+            <input className="form-control" placeholder="Search something" />
         </div>
         <div className="trends-container">
-            <div className="trends-header">Trends</div>
+            <div className="trends-header fw-bold mb-3">Trends</div>
             {trends.map((trend) => (
-                <div key={trend.id} className="trend-item">
-                    <div className="trend-avatar"></div>
+                <div key={trend.id} className="trend-item d-flex align-items-center mb-3">
+                    <div className="trend-avatar rounded-circle bg-secondary me-2" style={{ width: 32, height: 32 }}></div>
                     <div className="trend-user">
                         <div>{trend.username}</div>
-                        <div className="followers">{trend.followers} followers</div>
+                        <div className="followers text-muted small">{trend.followers} followers</div>
                     </div>
                 </div>
             ))}
@@ -69,68 +69,83 @@ const ProfileEditCenter = () => {
     const [notifEmail, setNotifEmail] = useState(true);
 
     return (
-        <div className="profile-content-custom">
-            <div className="profile-header-custom">
-                <div className="profile-pic">
-                    <i className="bi bi-person" />
+        <div className="profile-content-custom py-4">
+            <div className="profile-header-custom text-center mb-4">
+                <div className="profile-pic mx-auto mb-2">
+                    <i className="bi bi-person display-4" />
                 </div>
-                <div className="profile-user-row">
-                    <span className="profile-username">{username}</span>
-                    <button className="profile-edit-btn">Changer la photo</button>
+                <div className="profile-user-row d-flex flex-column align-items-center">
+                    <span className="profile-username fw-bold">{username}</span>
+                    <button className="profile-edit-btn btn btn-outline-secondary btn-sm mt-2">Changer la photo</button>
                 </div>
             </div>
 
-            <form className="edition-profile-main" style={{ margin: "2rem auto", maxWidth: 420 }}>
-                <div className="edition-profile-field">
-                    <label>Nom d'utilisateur</label>
-                    <input
-                        type="text"
-                        className="edition-profile-input"
-                        value={username}
-                        onChange={e => setUsername(e.target.value)}
-                    />
-                </div>
-                <div className="edition-profile-field">
-                    <label>Adresse email</label>
-                    <input
-                        type="email"
-                        className="edition-profile-input"
-                        value={email}
-                        onChange={e => setEmail(e.target.value)}
-                    />
-                </div>
-                <div className="edition-profile-field">
-                    <label>Bio</label>
-                    <textarea
-                        className="edition-profile-textarea"
-                        value={bio}
-                        onChange={e => setBio(e.target.value)}
-                    />
-                </div>
-                <div className="edition-profile-card">
-                    <div className="edition-profile-pref-title">Préférences</div>
-                    <div className="edition-profile-pref-row">
-                        <div>
-                            <div className="edition-profile-pref-label">Mode sombre</div>
-                            <div className="edition-profile-pref-desc">Ajuster l'apparence de l'application</div>
-                        </div>
-                        <label className="switch">
-                            <input type="checkbox" checked={darkMode} onChange={() => setDarkMode(!darkMode)} />
-                            <span className="slider"></span>
-                        </label>
-                    </div>
-                    <div className="edition-profile-pref-row">
-                        <div>
-                            <div className="edition-profile-pref-label">Notifications Emails</div>
-                            <div className="edition-profile-pref-desc">Recevoir des notifications par email</div>
-                        </div>
-                        <label className="switch">
-                            <input type="checkbox" checked={notifEmail} onChange={() => setNotifEmail(!notifEmail)} />
-                            <span className="slider"></span>
-                        </label>
+            <form className="edition-profile-main" style={{ maxWidth: 500, margin: "0 auto" }}>
+                <div className="row mb-3">
+                    <div className="col-12">
+                        <label className="form-label">Nom d'utilisateur</label>
+                        <input
+                            type="text"
+                            className="form-control"
+                            value={username}
+                            onChange={e => setUsername(e.target.value)}
+                        />
                     </div>
                 </div>
-                <button type="submit" className="profile-edit-btn" style={{ marginTop: 24 }}>
+                <div className="row mb-3">
+                    <div className="col-12">
+                        <label className="form-label">Adresse email</label>
+                        <input
+                            type="email"
+                            className="form-control"
+                            value={email}
+                            onChange={e => setEmail(e.target.value)}
+                        />
+                    </div>
+                </div>
+                <div className="row mb-3">
+                    <div className="col-12">
+                        <label className="form-label">Bio</label>
+                        <textarea
+                            className="form-control"
+                            value={bio}
+                            onChange={e => setBio(e.target.value)}
+                        />
+                    </div>
+                </div>
+                <div className="card mb-3">
+                    <div className="card-body">
+                        <div className="mb-3">
+                            <div className="form-check form-switch d-flex justify-content-between align-items-center">
+                                <div>
+                                    <div className="form-label mb-0">Mode sombre</div>
+                                    <small className="text-muted">Ajuster l'apparence de l'application</small>
+                                </div>
+                                <input
+                                    className="form-check-input"
+                                    type="checkbox"
+                                    checked={darkMode}
+                                    onChange={() => setDarkMode(!darkMode)}
+                                />
+                            </div>
+                        </div>
+                        <div>
+                            <div className="form-check form-switch d-flex justify-content-between align-items-center">
+                                <div>
+                                    <div className="form-label mb-0">Notifications Emails</div>
+                                    <small className="text-muted">Recevoir des notifications par email</small>
+                                </div>
+                                <input
+                                    className="form-check-input"
+                                    type="checkbox"
+                                    checked={notifEmail}
+                                    onChange={() => setNotifEmail(!notifEmail)}
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" className="btn btn-primary w-100">
                     Enregistrer
                 </button>
             </form>
@@ -138,17 +153,20 @@ const ProfileEditCenter = () => {
     );
 };
 
-const EditionProfile = () => {
-    const isMobile = window.innerWidth <= 768;
-    return (
-        <div className="edit-app" style={{ display: "flex" }}>
-            <Sidebar />
-            <main className="main-content">
+const EditionProfile = () => (
+    <div className="container-fluid">
+        <div className="row min-vh-100">
+            <div className="col-md-2 p-0">
+                <Sidebar />
+            </div>
+            <main className="col-12 col-md-8 col-lg-6 mx-auto d-flex align-items-center justify-content-center">
                 <ProfileEditCenter />
             </main>
-            {!isMobile && <RightSidebar />}
+            <div className="col-lg-4 p-0">
+                <RightSidebar />
+            </div>
         </div>
-    );
-};
+    </div>
+);
 
 export default EditionProfile;
