@@ -8,7 +8,7 @@ import EditionProfile from "./EditionProfile.jsx";
 import SettingsPage from "./Settings.jsx";
 import LoginPage from "./Login.jsx";
 import CreatePage from "./AddPost.jsx";
-import Tendances from "./Search.jsx";
+import Tendances from "./Tendances.jsx";
 import RegisterPage from "./SignIn.jsx";
 
 export default function App() {
