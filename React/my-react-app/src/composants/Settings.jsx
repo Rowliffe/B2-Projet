@@ -20,7 +20,7 @@ const SettingsPage = () => {
                 </div>
 
                 <div className="col-md-6 col-lg-7">
-                    <div className="settings-page">
+                    <div className="settings-page pb-5">
                         <h2>Paramètres du compte</h2>
 
                         <div className="setting-section">

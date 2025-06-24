@@ -3,6 +3,7 @@ import { Home, MessageCircle, Search, Settings, User } from "lucide-react";
 import { Link } from "react-router-dom";
 import ResponsiveSidebar from "./ResponsiveSidebar.jsx";
 import '../styles/editionProfile.css';
+import SharedSidebar from "./SharedSidebar.jsx";
 
 const trends = [
     { id: 1, username: "User 1", followers: "14K" },
@@ -155,12 +156,12 @@ const ProfileEditCenter = () => {
 };
 
 const EditionProfile = () => (
-    <div className="container-fluid">
+    <div className="container-profile ">
         <div className="row min-vh-100">
             <div className="col-md-2 p-0">
-                <Sidebar />
+                <SharedSidebar />
             </div>
-            <main className="col-12 col-md-8 col-lg-6 mx-auto d-flex align-items-center justify-content-center">
+            <main className="col-12 col-md-8 col-lg-6 d-flex align-items-center justify-content-center min-vh-100">
                 <ProfileEditCenter />
             </main>
             <div className="col-lg-4 p-0">
@@ -170,5 +171,6 @@ const EditionProfile = () => (
         </div>
     </div>
 );
+
 
 export default EditionProfile;

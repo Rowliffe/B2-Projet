@@ -1,26 +1,27 @@
 /* Container principal */
+/* Carte de connexion *
+
+/* Container de l'avatar */
 .login-container {
-    width: 100vw;
-    height: 100vh;
-    background-color: #e5e7eb;
+    min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+    background: #f3f4f6;
+    padding: 0;
 }
 
-
-/* Carte de connexion */
 .login-card {
-    background-color: white;
-    border-radius: 1rem;
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-    padding: 2rem;
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+    padding: 40px 32px 32px 32px;
     width: 100%;
-    max-width: 28rem;
+    max-width: 420px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
-
-/* Container de l'avatar */
 .avatar-container {
     display: flex;
     justify-content: center;
