@@ -1,6 +1,7 @@
 .app-container {
     display: flex;
     min-height: 100vh;
+    width: 100%;
     position: relative;
 }
 
@@ -10,8 +11,9 @@
     justify-content: center;
     position: relative;
     margin-top: 150px;
+    margin-left: 100px; /* Ajusté pour laisser de l'espace pour la sidebar */
     left: 18vw;
-    height: 330px;
+    height: auto; /* Ajusté pour s'adapter au contenu */
     padding: 0 20px;
     max-width: 400px;
 }
@@ -19,7 +21,7 @@
 .creation-post-card {
     background: #fff;
     border-radius: 24px;
-    box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.07);
     width: 100%;
     margin: 2rem 0;
     padding: 0;
@@ -32,7 +34,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 1.2rem 1.5rem 1.2rem 1.5rem;
+    padding: 1.2rem 1.5rem;
     border-bottom: 1px solid #e3e6ea;
     font-weight: 500;
     font-size: 1.1rem;
@@ -65,7 +67,7 @@
 .creation-post-body {
     display: flex;
     align-items: flex-start;
-    padding: 1.2rem 1.5rem 0.5rem 1.5rem;
+    padding: 1.2rem 1.5rem 0.5rem;
     background: #fff;
 }
 
@@ -90,8 +92,20 @@
     margin-bottom: 0.3rem;
 }
 
+.creation-post-title {
+    border: 1px solid #e3e6ea;
+    border-radius: 8px;
+    padding: 0.5rem;
+    background: transparent;
+    outline: none;
+    color: #1a1a1a;
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+}
+
 .creation-post-textarea {
-    border: none;
+    border: 1px solid #e3e6ea;
+    border-radius: 8px;
     resize: none;
     width: 100%;
     min-height: 48px;
@@ -100,6 +114,10 @@
     outline: none;
     color: #222;
     margin-bottom: 0.5rem;
+}
+
+.creation-post-image {
+    margin-top: 0.5rem;
 }
 
 .creation-post-separator {
@@ -112,7 +130,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0.7rem 1.5rem 1.2rem 1.5rem;
+    padding: 0.7rem 1.5rem 1.2rem;
     background: #fff;
 }
 
@@ -137,34 +155,8 @@
     font-size: 0.98rem;
 }
 
-.Aperçu {
-    background: #1c2c4c;
-    width: 300px;
-    position: fixed;
-    right: 30px;
-    top: 30px;
-    height: auto;
-    border: none;
-    z-index: 1001;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-}
-
-.aperçu-card {
-    background: #fff;
-    border-radius: 24px;
-    box-shadow: 0 2px 16px rgba(0,0,0,0.07);
-    max-width: 420px;
-    margin: 2rem auto;
-    padding: 0;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-}
-
 .apercu-col {
-    background: #192734 ;
+    background: #192734;
     width: 440px;
     position: fixed;
     right: 0;
@@ -187,10 +179,10 @@
 .apercu-card {
     background: #fff;
     border-radius: 18px;
-    box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.07);
     width: 90%;
     max-width: 320px;
-    padding: 1.2rem 1.2rem 1.1rem 1.2rem;
+    padding: 1.2rem;
     display: flex;
     flex-direction: column;
     margin-bottom: 1.5rem;
@@ -234,7 +226,7 @@
     .app-container {
         flex-direction: column;
     }
-    .main-content {
+    .post-main {
         margin: 0;
         padding: 0 20px 60px 20px;
         max-width: 100%;
@@ -246,13 +238,13 @@
 }
 
 @media (max-width: 1200px) {
-    .main-content {
+    .post-main {
         left: -50px;
     }
 }
 
 @media (max-width: 1000px) {
-    .main-content {
+    .post-main {
         left: -25px;
     }
 }

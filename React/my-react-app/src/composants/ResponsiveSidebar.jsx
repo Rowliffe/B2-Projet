@@ -15,8 +15,9 @@ const navItems = [
 export default function ResponsiveSidebar() {
     const location = useLocation();
     return (
-        <nav className="mobile-bottom-nav d-flex d-md-none justify-content-around align-items-center py-2 px-1">
-            {navItems.map(({ to, icon, label }) => (
+        <nav className="mobile-bottom-nav d-flex d-md-none justify-content-around align-items-center ">
+
+        {navItems.map(({ to, icon, label }) => (
                 <Link
                     key={to}
                     to={to}

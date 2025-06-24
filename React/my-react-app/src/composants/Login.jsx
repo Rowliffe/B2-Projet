@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import '../styles/login.css';
 
 const LoginPage = () => {
@@ -19,10 +20,10 @@ const LoginPage = () => {
                         <span className="avatar-letter">L</span>
                     </div>
                 </div>
-                <div className="form-container">
+                <form className="form-container" onSubmit={handleSubmit}>
                     <div className="field-group">
                         <div className="field-label">
-                            Nom d'utilisateur
+                            Nom d&apos;utilisateur
                         </div>
                         <input
                             type="text"
@@ -54,27 +55,27 @@ const LoginPage = () => {
                                 id="remember-me"
                             />
                             <label htmlFor="remember-me" className="checkbox-label">
-                                Se Souvenir de moi
+                                Se souvenir de moi
                             </label>
                         </div>
                         <button
+                            type="button"
                             onClick={() => console.log('Mot de passe oublié')}
                             className="forgot-password-btn"
                         >
-                            mot de passe oublié
+                            Mot de passe oublié
                         </button>
                         <Link to="/register" className="forgot-password-btn">
-                            Pas encore inscrit ?
+                            Pas encore inscrit&nbsp;?
                         </Link>
-
                     </div>
                     <button
-                        onClick={handleSubmit}
+                        type="submit"
                         className="submit-btn"
                     >
-                        Se Connecter
+                        Se connecter
                     </button>
-                </div>
+                </form>
             </div>
         </div>
     );

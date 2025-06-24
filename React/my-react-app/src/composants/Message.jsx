@@ -73,7 +73,7 @@ const MessagePage = () => {
                 </Link>
             </div>
             {/* Contenu principal */}
-            <div className="message-app container me-5 p-3 d-flex flex-column flex-grow-1">
+            <div className="message-app container me-5 p-3 d-flex flex-column flex-grow-1 pb-5">
                 <div className="row flex-grow-1">
                     {/* Liste des utilisateurs */}
                     <div className="col-12 col-md-4 p-3 border-end overflow-auto">

@@ -20,12 +20,13 @@ export default function TwitterLikeInterface() {
     // trends moved to SharedRightSidebar
 
     useEffect(() => {
-        // Update active tab based on the current location
         if (location.pathname === '/home') setActiveTab('home');
         else if (location.pathname === '/messages') setActiveTab('messages');
         else if (location.pathname === '/search') setActiveTab('search');
         else if (location.pathname === '/settings') setActiveTab('settings');
         else if (location.pathname === '/profile') setActiveTab('profile');
+        else if (location.pathname === '/decouvrir') setActiveTab('decouvrir');
+        else if (location.pathname === '/suivis') setActiveTab('suivis');
     }, [location]);
 
     return (
@@ -34,7 +35,7 @@ export default function TwitterLikeInterface() {
             <SharedSidebar />
 
             {/* Main Content */}
-            <div className="main-content-home">
+            <div className="main-content-home pb-5">
                 <div className="header">
                     <Link to="/decouvrir" className={`header-tab ${activeTab === 'decouvrir' ? 'active' : ''}`}>
                         Découvrir
