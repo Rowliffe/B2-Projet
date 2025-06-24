@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import SharedSidebar from './SharedSidebar.jsx';
 import SharedRightSidebar from './SharedRightSidebar.jsx';
 import '../styles/settings.css';
+import ResponsiveSidebar from "./ResponsiveSidebar.jsx";
 
 const SettingsPage = () => {
     const [activeTab, setActiveTab] = useState('settings');
@@ -60,6 +61,7 @@ const SettingsPage = () => {
                     <SharedRightSidebar />
                 </div>
             </div>
+            <ResponsiveSidebar />
         </div>
     );
 };

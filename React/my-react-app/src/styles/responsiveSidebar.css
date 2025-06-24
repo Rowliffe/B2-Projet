@@ -1,0 +1,29 @@
+.mobile-bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+    background: #15202b;
+    border-top: 1px solid #22303c;
+    z-index: 1000;
+    height: 56px;
+}
+.mobile-nav-item {
+    color: #fff;
+    padding: 8px 12px;
+    border-radius: 12px;
+    transition: background 0.2s, color 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.mobile-nav-item.active,
+.mobile-nav-item:hover {
+    background: #22303c;
+    color: #1da1f2;
+}
+@media (min-width: 768px) {
+    .mobile-bottom-nav {
+        display: none !important;
+    }
+}

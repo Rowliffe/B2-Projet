@@ -4,6 +4,8 @@ import { Link, Outlet, useLocation } from 'react-router-dom';
 import SharedSidebar from './SharedSidebar.jsx';
 import SharedRightSidebar from './SharedRightSidebar.jsx';
 import '../styles/home.css';
+import '../styles/responsiveSidebar.css';
+import ResponsiveSidebar from './ResponsiveSidebar.jsx';
 
 export default function TwitterLikeInterface() {
     const [activeTab, setActiveTab] = useState('home');
@@ -54,6 +56,8 @@ export default function TwitterLikeInterface() {
 
             {/* Right Sidebar - Trends */}
             <SharedRightSidebar />
+            {/* Responsive Bottom Navigation */}
+            <ResponsiveSidebar activeTab={activeTab} />
         </div>
     );
 }

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Home, MessageCircle, Search, Settings, User } from "lucide-react";
 import '../styles/addpost.css';
+import ResponsiveSidebar from "./ResponsiveSidebar"; // Import the responsive sidebar
 
 const CreationPost = ({ setText, text }) => {
     const maxChars = 128;
@@ -98,6 +99,7 @@ const CreatePost = () => {
                 <CreationPost setText={setText} text={text} />
                 <Apercu text={text} />
             </main>
+            <ResponsiveSidebar activeTab={activeTab} />
         </div>
     );
 };

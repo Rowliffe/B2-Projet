@@ -3,6 +3,7 @@ import '../styles/profile.css';
 import SharedSidebar from "./SharedSidebar.jsx";
 import SharedRightSidebar from "./SharedRightSidebar.jsx";
 import { Link } from "react-router-dom";
+import ResponsiveSidebar from "./ResponsiveSidebar.jsx";
 
 // trends and other data moved to SharedRightSidebar or will be managed locally
 
@@ -69,6 +70,9 @@ const VueProfileContentOnly = () => {
                 </div>
                 <div className="col-md-3 col-lg-3 d-none d-md-block"> {/* Hide on small screens, show on medium and larger */}
                     <SharedRightSidebar />
+                </div>
+                <div className="col-12 d-md-none"> {/* Responsive sidebar for small screens */}
+                    <ResponsiveSidebar />
                 </div>
             </div>
         </div>

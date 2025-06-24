@@ -3,6 +3,7 @@ import { Home, MessageCircle, Search, Send, Settings, User, Plus } from 'lucide-
 import { Link, useLocation } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../styles/message.css';
+import ResponsiveSidebar from "./ResponsiveSidebar.jsx";
 
 const MessagePage = () => {
     const location = useLocation(); // Ajouté
@@ -138,6 +139,9 @@ const MessagePage = () => {
                     </div>
                 </div>
             </div>
+            {/* Barre de navigation inférieure */}
+            <ResponsiveSidebar />
+
         </div>
     );
 };

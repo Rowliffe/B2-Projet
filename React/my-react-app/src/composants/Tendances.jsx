@@ -4,7 +4,7 @@ import { Link, useLocation } from 'react-router-dom';
 import SharedSidebar from './SharedSidebar.jsx';
 import SharedRightSidebar from './SharedRightSidebar.jsx';
 import '../styles/tendances.css'; // Import your new CSS file
-
+import ResponsiveSidebar from "./ResponsiveSidebar.jsx";
 export default function Tendances() {
     const [activeTab, setActiveTab] = useState('principale');
     const location = useLocation();
@@ -69,6 +69,7 @@ export default function Tendances() {
                 <div className="col-md-3 col-lg-3 d-none d-md-block"> {/* Hide on small screens, show on medium and larger */}
                     <SharedRightSidebar />
                 </div>
+                <ResponsiveSidebar activeTab={activeTab} />
             </div>
         </div>
     );

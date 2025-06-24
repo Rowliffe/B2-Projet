@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Home, MessageCircle, Search, Settings, User } from "lucide-react";
 import { Link } from "react-router-dom";
+import ResponsiveSidebar from "./ResponsiveSidebar.jsx";
 import '../styles/editionProfile.css';
 
 const trends = [
@@ -165,6 +166,7 @@ const EditionProfile = () => (
             <div className="col-lg-4 p-0">
                 <RightSidebar />
             </div>
+            <ResponsiveSidebar activeItem="settings" />
         </div>
     </div>
 );

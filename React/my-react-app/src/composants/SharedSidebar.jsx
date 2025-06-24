@@ -33,5 +33,6 @@ export default function SharedSidebar() {
                 <button className="add-post-btn">ADD A POST</button>
             </Link>
         </div>
+
     );
-} 
+}
