@@ -1,0 +1,131 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profil de {{ user.pseudo }}{% endblock %}
+
+{% block body %}
+    <div class="container py-4">
+        <div class="mb-4">
+            <a href="{{ path('tweet') }}" class="btn btn-outline-secondary">
+                <i class="fas fa-arrow-left"></i> Retour à l'accueil
+            </a>
+        </div>
+        <div class="row">
+            <!-- Profil utilisateur -->
+            <div class="col-lg-4">
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-body text-center">
+                        <div class="mb-3">
+                            <img src="{{ user.photo }}" 
+                                 alt="Photo de profil" 
+                                 class="rounded-circle"
+                                 style="width: 150px; height: 150px; object-fit: cover;">
+                        </div>
+                        <h2 class="h4 mb-1">{{ user.pseudo }}</h2>
+                        <p class="text-muted mb-3">{{ user.email }}</p>
+                        {% if app.user and app.user.id == user.id %}
+                            <a href="{{ path('edit_profile') }}" class="btn btn-primary mb-3">
+                                <i class="fas fa-edit"></i> Modifier mon profil
+                            </a>
+                        {% endif %}
+                        <div class="d-flex justify-content-center gap-3 mb-3">
+                            <div class="text-center">
+                                <h5 class="mb-0">{{ tweets|length }}</h5>
+                                <small class="text-muted">Tweets</small>
+                            </div>
+                            <div class="text-center">
+                                <h5 class="mb-0">{{ likes|length }}</h5>
+                                <small class="text-muted">Likes</small>
+                            </div>
+                            <div class="text-center">
+                                <h5 class="mb-0">{{ retweets|length }}</h5>
+                                <small class="text-muted">Retweets</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tweets de l'utilisateur -->
+            <div class="col-lg-8">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-white">
+                        <ul class="nav nav-tabs card-header-tabs">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#tweets" data-bs-toggle="tab">Tweets</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#likes" data-bs-toggle="tab">Likes</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#retweets" data-bs-toggle="tab">Retweets</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="card-body">
+                        <div class="tab-content">
+                            <!-- Tweets -->
+                            <div class="tab-pane fade show active" id="tweets">
+                                {% for tweet in tweets %}
+                                    <div class="card mb-3 border-0 shadow-sm">
+                                        <div class="card-body">
+                                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                                <h5 class="card-title mb-0">{{ tweet.title }}</h5>
+                                                <small class="text-muted">{{ tweet.createdAt|date('d/m/Y H:i') }}</small>
+                                            </div>
+                                            <p class="card-text">{{ tweet.content }}</p>
+                                            {% if tweet.picture %}
+                                                <img src="{{ tweet.picture }}" alt="Image" class="img-fluid rounded mb-2">
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                {% else %}
+                                    <p class="text-center text-muted">Aucun tweet pour le moment</p>
+                                {% endfor %}
+                            </div>
+
+                            <!-- Likes -->
+                            <div class="tab-pane fade" id="likes">
+                                {% for like in likes %}
+                                    <div class="card mb-3 border-0 shadow-sm">
+                                        <div class="card-body">
+                                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                                <h5 class="card-title mb-0">{{ like.title }}</h5>
+                                                <small class="text-muted">{{ like.createdAt|date('d/m/Y H:i') }}</small>
+                                            </div>
+                                            <p class="card-text">{{ like.content }}</p>
+                                            {% if like.picture %}
+                                                <img src="{{ like.picture }}" alt="Image" class="img-fluid rounded mb-2">
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                {% else %}
+                                    <p class="text-center text-muted">Aucun like pour le moment</p>
+                                {% endfor %}
+                            </div>
+
+                            <!-- Retweets -->
+                            <div class="tab-pane fade" id="retweets">
+                                {% for retweet in retweets %}
+                                    <div class="card mb-3 border-0 shadow-sm">
+                                        <div class="card-body">
+                                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                                <h5 class="card-title mb-0">{{ retweet.title }}</h5>
+                                                <small class="text-muted">{{ retweet.createdAt|date('d/m/Y H:i') }}</small>
+                                            </div>
+                                            <p class="card-text">{{ retweet.content }}</p>
+                                            {% if retweet.picture %}
+                                                <img src="{{ retweet.picture }}" alt="Image" class="img-fluid rounded mb-2">
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                {% else %}
+                                    <p class="text-center text-muted">Aucun retweet pour le moment</p>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %} 

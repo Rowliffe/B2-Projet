@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+{% endblock %}
+
+{% block body %}
+    <div class="login-container d-flex align-items-center justify-content-center">
+        <div class="login-card bg-white">
+            <div class="logo-circle">
+                L
+            </div>
+
+            <form method="post">
+                {% if error %}
+                    <div class="alert alert-danger">
+                        {{ error.messageKey|trans(error.messageData, 'security') }}
+                    </div>
+                {% endif %}
+
+                {% if app.user %}
+                    <div class="mb-3 text-muted">
+                        Vous êtes connecté en tant que {{ app.user.userIdentifier }},
+                        <a href="{{ path('app_logout') }}" class="text-primary">Déconnexion</a>
+                    </div>
+                {% endif %}
+
+                <div class="mb-3">
+                    <label for="username" class="form-label fw-medium">Nom d'utilisateur</label>
+                    <input type="email"
+                           value="{{ last_username }}"
+                           name="_username"
+                           id="username"
+                           class="form-control"
+                           autocomplete="email"
+                           required
+                           autofocus>
+                </div>
+
+                <div class="mb-3">
+                    <label for="password" class="form-label fw-medium">Mot de passe</label>
+                    <input type="password"
+                           name="_password"
+                           id="password"
+                           class="form-control"
+                           autocomplete="current-password"
+                           required>
+                </div>
+
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+                <div class="mb-3 mt-3">
+                    <a href="{{ path('inscription') }}" class="text-black text-decoration-none">S'inscrire</a>
+                </div>
+
+
+                <button type="submit" class="btn btn-primary w-100 btn-login">
+                    Se Connecter
+                </button>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+
+

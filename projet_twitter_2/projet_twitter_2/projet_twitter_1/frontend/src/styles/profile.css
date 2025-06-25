@@ -1,0 +1,278 @@
+/* No more .twitter-app styles here, as global styles in index.css handle it */
+
+/* Styles for Sidebar (copied from home.css) */
+.sidebar {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    background-color: #192734;
+    border-right: 1px solid #38444d;
+}
+
+.sidebar-logo {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #1da1f2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.sidebar-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 0;
+    color: white;
+    text-decoration: none;
+}
+
+.add-post-btn {
+    background-color: #1da1f2;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    padding: 12px 0;
+    font-weight: bold;
+    margin-top: auto;
+    cursor: pointer;
+}
+
+/* Right Sidebar (copied from home.css) */
+.right-sidebar {
+    padding: 15px;
+}
+
+.search-bar {
+    background-color: #253341;
+    border-radius: 30px;
+    padding: 10px 15px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.search-input {
+    background-color: transparent;
+    border: none;
+    color: white;
+    margin-left: 10px;
+    outline: none;
+    width: 100%;
+}
+
+.trends-container {
+    background-color: #192734;
+    border-radius: 15px;
+    padding: 15px;
+}
+
+.trends-header {
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.trend-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.trend-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #1da1f2;
+}
+
+.trend-user {
+    display: flex;
+    flex-direction: column;
+}
+
+.followers {
+    color: #8899a6;
+    font-size: 14px;
+}
+
+/* Existing styles adapted for dark theme */
+.profile-content-custom {
+    flex-grow: 1;
+    background-color: #15202b;
+    box-shadow: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    color: white;
+}
+
+.profile-header-custom {
+    width : 100%;
+    padding: 2rem 0 1rem 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #15202b;
+}
+
+.profile-pic {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background-color: #1da1f2;
+    border: 2.5px solid #1da1f2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    color: white;
+}
+
+.profile-user-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.profile-username {
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: white;
+}
+
+.profile-edit-link {
+    text-decoration: none;
+}
+
+.profile-edit-btn {
+    background-color: #1da1f2;
+    color: white;
+    border: none;
+    border-radius: 999px;
+    padding: 0.2rem 0.8rem;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s, border 0.2s;
+}
+
+.profile-edit-btn:hover {
+    background-color: #1c87db;
+}
+
+.profile-stats-row {
+    display: flex;
+    gap: 1.5rem;
+    color: #8899a6;
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+    background-color: #15202b;
+}
+
+.profile-add-btn-container {
+    display: flex;
+    justify-content: center;
+    padding: 1rem 0;
+    background-color: #15202b;
+
+}
+
+.profile-add-btn {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: #1da1f2;
+    color: white;
+    border: 2px solid #1da1f2;
+    font-size: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s, border 0.2s;
+}
+
+.profile-add-btn:hover {
+    background-color: #1c87db;
+    color: white;
+    border-color: #1c87db;
+}
+
+.profile-tabs-custom {
+    display: flex;
+    width: 100%;
+    border-bottom: 1px solid #38444d;
+    background-color: #15202b;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.tab-btn-custom {
+    flex: 1 1 0;
+    background-color: #15202b;
+    border: none;
+    outline: none;
+    color: white;
+    font-weight: 500;
+    font-size: 1rem;
+    padding: 0.7rem 0;
+    border-bottom: 2.5px solid transparent;
+    transition: color 0.2s, border-bottom 0.2s, background 0.2s;
+    text-align: center;
+    cursor: pointer;
+}
+
+.tab-btn-custom.active,
+.tab-btn-custom:focus {
+    color: white;
+    border-bottom: 2.5px solid #1da1f2;
+    background-color: #15202b;
+}
+
+.tab-btn-custom:hover {
+    color: white;
+    background-color: #192734;
+}
+
+.profile-empty-msg {
+    width: 100%;
+    text-align: center;
+    color: #8899a6;
+    margin-top: 3rem;
+    font-size: 1.1rem;
+}
+
+/* Responsive for profile - adjust existing media queries as needed or remove if handled by grid */
+@media (max-width: 768px) {
+    .profile-header-custom {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+    .profile-user-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    .profile-stats-row {
+        flex-direction: row;
+        gap: 1rem;
+        font-size: 0.95em;
+    }
+    .profile-add-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2em;
+    }
+    .profile-tabs-custom {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+}

@@ -1,0 +1,139 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tweet de {{ tweet.author.pseudo }}{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <div class="mb-4">
+            <a href="{{ path('tweet') }}" class="btn btn-outline-secondary">
+                <i class="fas fa-arrow-left"></i> Retour à l'accueil
+            </a>
+        </div>
+
+        {# Affichage du tweet principal #}
+        <div class="card mb-4 shadow-sm">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h3 class="card-title mb-0">{{ tweet.title }}</h3>
+                    <div class="d-flex gap-2">
+                        {% set userLiked = false %}
+                        {% set userRetweeted = false %}
+                        {% for t in tweets %}
+                            {% if t.type == 'like' and t.idParent == tweet.id and t.author == app.user %}
+                                {% set userLiked = true %}
+                            {% endif %}
+                            {% if t.type == 'retweet' and t.idParent == tweet.id and t.author == app.user %}
+                                {% set userRetweeted = true %}
+                            {% endif %}
+                        {% endfor %}
+                        <a href="{{ path('tweet_like', {'id': tweet.id}) }}" 
+                           class="btn btn-outline-danger btn-sm {% if userLiked %}active{% endif %}">
+                            <i class="fas fa-heart"></i> J'aime
+                        </a>
+                        <a href="{{ path('tweet_retweet', {'id': tweet.id}) }}" 
+                           class="btn btn-outline-success btn-sm {% if userRetweeted %}active{% endif %}">
+                            <i class="fas fa-retweet"></i> Retweet
+                        </a>
+                        <a href="{{ path('tweet_comment', {'id': tweet.id}) }}"
+                           class="btn btn-outline-info btn-sm">
+                            <i class="fas fa-comment"></i> Commenter
+                        </a>
+                        {% if app.user and app.user == tweet.author %}
+                            <a href="{{ path('edit_tweet', {'id': tweet.id}) }}" class="btn btn-outline-primary btn-sm">
+                                <i class="fas fa-edit"></i> Modifier
+                            </a>
+                            <a href="{{ path('delete_tweet', {'id': tweet.id}) }}" class="btn btn-outline-danger btn-sm">
+                                <i class="fas fa-trash"></i> Supprimer
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="row align-items-center">
+                    <div class="col-md-4">
+                        <img src="{{ tweet.picture }}" alt="Image" class="img-fluid rounded">
+                    </div>
+                    <div class="col-md-8 d-flex flex-column justify-content-between">
+                        <h2 class="mb-3">{{ tweet.createdAt|date('Y-m-d') }}</h2>
+                        <p class="mb-3">
+                            {{ tweet.content }}
+                        </p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <p class="text-muted mb-0">{{ tweet.author.pseudo }}</p>
+                            <div class="d-flex gap-2">
+                                <span class="badge bg-danger">{{ tweet.getLikesCount(tweets) }}</span>
+                                <span class="badge bg-success">{{ tweet.getRetweetsCount(tweets) }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {# Section des commentaires #}
+        <div class="mt-4">
+            <h3 class="mb-4">Commentaires ({{ comments|length }})</h3>
+            
+            {% if comments is empty %}
+                <div class="alert alert-info">
+                    Aucun commentaire pour le moment. Soyez le premier à commenter !
+                </div>
+            {% else %}
+                {% for comment in comments %}
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h3 class="card-title mb-0">{{ comment.title }}</h3>
+                            <div class="d-flex gap-2">
+                                {% set userLiked = false %}
+                                {% set userRetweeted = false %}
+                                {% for t in tweets %}
+                                    {% if t.type == 'like' and t.idParent == comment.id and t.author == app.user %}
+                                        {% set userLiked = true %}
+                                    {% endif %}
+                                    {% if t.type == 'retweet' and t.idParent == comment.id and t.author == app.user %}
+                                        {% set userRetweeted = true %}
+                                    {% endif %}
+                                {% endfor %}
+                                <a href="{{ path('tweet_like', {'id': comment.id}) }}" 
+                                   class="btn btn-outline-danger btn-sm {% if userLiked %}active{% endif %}">
+                                    <i class="fas fa-heart"></i> J'aime
+                                </a>
+                                <a href="{{ path('tweet_retweet', {'id': comment.id}) }}" 
+                                   class="btn btn-outline-success btn-sm {% if userRetweeted %}active{% endif %}">
+                                    <i class="fas fa-retweet"></i> Retweet
+                                </a>
+                                {% if app.user and app.user == comment.author %}
+                                    <a href="{{ path('edit_tweet', {'id': comment.id}) }}" class="btn btn-outline-primary btn-sm">
+                                        <i class="fas fa-edit"></i> Modifier
+                                    </a>
+                                    <a href="{{ path('delete_tweet', {'id': comment.id}) }}" class="btn btn-outline-danger btn-sm">
+                                        <i class="fas fa-trash"></i> Supprimer
+                                    </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="row align-items-center">
+                            <div class="col-md-4">
+                                <img src="{{ comment.picture }}" alt="Image" class="img-fluid rounded">
+                            </div>
+                            <div class="col-md-8 d-flex flex-column justify-content-between">
+                                <h2 class="mb-3">{{ comment.createdAt|date('Y-m-d') }}</h2>
+                                <p class="mb-3">
+                                    {{ comment.content }}
+                                </p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <p class="text-muted mb-0">{{ comment.author.pseudo }}</p>
+                                    <div class="d-flex gap-2">
+                                        <span class="badge bg-danger">{{ comment.getLikesCount(tweets) }}</span>
+                                        <span class="badge bg-success">{{ comment.getRetweetsCount(tweets) }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>  
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+{% endblock %} 

@@ -1,0 +1,510 @@
+/* Layout principal */
+.app-container {
+  display: flex;
+  min-height: 100vh;
+  background-color: #f7f9fa;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 68px;
+  background-color: #1c2c4c;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  padding: 1rem;
+  transition: width 0.3s ease;
+  overflow-x: hidden;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar:hover {
+  width: 275px;
+}
+
+.sidebar-container {
+  width: 68px;
+  flex-shrink: 0;
+  transition: width 0.3s ease;
+}
+
+.sidebar:hover .sidebar-container {
+  width: 275px;
+}
+
+.sidebar-list {
+  width: 100%;
+  padding-left: 0;
+  margin-bottom: 0;
+}
+
+.sidebar-btn {
+  background: none;
+  border: none;
+  color: #fff;
+  padding: 0.75rem 1rem;
+  border-radius: 9999px;
+  transition: background 0.2s, color 0.2s;
+  font-size: 1.1rem;
+  text-align: left;
+  outline: none;
+  box-shadow: none;
+}
+
+.sidebar-btn:hover, .sidebar-btn:focus {
+  background: rgba(255,255,255,0.1);
+  color: #1da1f2;
+}
+
+.sidebar-label {
+  opacity: 0;
+  width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  transition: opacity 0.2s, width 0.2s, margin 0.2s;
+  margin-left: 0;
+}
+
+.sidebar:hover .sidebar-label {
+  opacity: 1;
+  width: auto;
+  margin-left: 0.75rem;
+}
+
+.logo-btn {
+  background-color: #2d3e5f;
+  border: none;
+  width: 40px;
+  height: 40px;
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  transition: all 0.2s;
+  color: #fff;
+}
+
+.logo-btn:hover {
+  background-color: #3d4e6f;
+}
+
+/* Contenu principal */
+.main-content {
+  flex: 1;
+  margin-left: 68px;
+  transition: margin-left 0.3s ease;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  background: transparent;
+}
+
+.sidebar:hover ~ .main-content {
+  margin-left: 275px;
+}
+
+/* Barre de droite */
+.right-bar {
+  width: 275px;
+  position: fixed;
+  right: 0;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  background-color: transparent;
+  padding: 1rem;
+  border-left: none;
+  transition: width 0.3s ease, transform 0.3s ease;
+}
+
+.sidebar:hover ~ .main-content + .right-bar {
+  width: 68px;
+}
+
+.post-button {
+  background-color: #1da1f2;
+  border: none;
+  padding: 0.75rem;
+  border-radius: 9999px;
+  font-weight: bold;
+  transition: all 0.2s;
+  white-space: nowrap;
+  width: 40px;
+  overflow: hidden;
+}
+
+.sidebar:hover .post-button {
+  width: 100%;
+}
+
+.post-button:hover {
+  background-color: #1a91da;
+}
+
+/* Styles pour le profil */
+.profile-content {
+  background-color: white;
+  min-height: 100vh;
+}
+
+.profile-banner {
+  background-size: cover;
+  background-position: center;
+}
+
+.profile-info {
+  background-color: white;
+}
+
+.profile-nav .btn-link {
+  position: relative;
+  transition: color 0.2s;
+}
+
+.profile-nav .btn-link:hover {
+  color: #1da1f2 !important;
+}
+
+.profile-nav .btn-link.active {
+  color: #1da1f2 !important;
+  font-weight: bold;
+}
+
+.profile-nav .btn-link.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background-color: #1da1f2;
+  border-radius: 2px;
+}
+
+.tweet {
+  transition: background-color 0.2s;
+}
+
+.tweet:hover {
+  background-color: rgba(0, 0, 0, 0.03);
+}
+
+.tweet .btn-link {
+  transition: color 0.2s;
+}
+
+.tweet .btn-link:hover {
+  color: #1da1f2 !important;
+}
+
+.tweet .btn-link i {
+  font-size: 1.1rem;
+}
+
+/* Ajustement pour les icÃ´nes Bootstrap */
+.bi {
+  display: inline-block;
+  vertical-align: -0.125em;
+}
+
+/* --- PROFIL COLONNE CENTRALE --- */
+.profile-content-custom {
+  background: #fff;
+  border-left: 1px solid #e3e6ea;
+  border-right: 1px solid #e3e6ea;
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0;
+}
+
+.profile-header-custom {
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 2rem;
+  padding-bottom: 1rem;
+}
+
+.profile-pic {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: #f5f8fa;
+  border: 2px solid #222;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.profile-user-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.profile-username {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.profile-edit-btn {
+  background: #222;
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  padding: 0.2rem 0.8rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.profile-stats-row {
+  display: flex;
+  gap: 1.5rem;
+  color: #888;
+  font-size: 0.95rem;
+  margin-bottom: 1rem;
+}
+
+.profile-add-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #fff;
+  color: #222;
+  border: 2px solid #222;
+  font-size: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  cursor: pointer;
+}
+
+.profile-tabs-custom {
+  display: flex;
+  width: 100%;
+  max-width: 700px;
+  border-bottom: 1px solid #e3e6ea;
+  background: #fff;
+}
+
+.tab-btn-custom {
+  flex: 1 1 0;
+  background: none;
+  border: none;
+  outline: none;
+  color: #222;
+  font-weight: 500;
+  font-size: 1rem;
+  padding: 0.7rem 0;
+  border-bottom: 2.5px solid transparent;
+  transition: color 0.2s, border-bottom 0.2s;
+  text-align: center;
+  cursor: pointer;
+}
+
+.tab-btn-custom.active,
+.tab-btn-custom:focus {
+  color: #1d9bf0;
+  border-bottom: 2.5px solid #1d9bf0;
+}
+
+.tab-btn-custom:hover {
+  color: #1d9bf0;
+  background: #f5f8fa;
+}
+
+.profile-empty-msg {
+  width: 100%;
+  max-width: 700px;
+  text-align: center;
+  color: #888;
+  margin-top: 3rem;
+  font-size: 1.1rem;
+}
+
+/* Responsive ajustement */
+@media (max-width: 900px) {
+  .right-bar {
+    display: none;
+  }
+  .main-content {
+    max-width: 100%;
+  }
+  .profile-content-custom {
+    border-right: none;
+    border-left: none;
+  }
+}
+
+.sidebar-plus-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #1da1f2;
+  color: #fff;
+  border: none;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.2s, visibility 0.2s;
+  opacity: 1;
+  visibility: visible;
+  z-index: 2;
+  margin-top: auto;
+}
+
+.sidebar:hover .sidebar-plus-btn {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.sidebar .post-button {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.2s, visibility 0.2s;
+}
+
+.sidebar:hover .post-button {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.trends-card {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  padding: 1.5rem 1.2rem;
+  margin-bottom: 1.5rem;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.sidebar:hover ~ .main-content + .right-bar .trends-card {
+  padding: 1rem 0.5rem;
+  opacity: 0.7;
+}
+
+.trends-card h6 {
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin-bottom: 1.2rem;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.sidebar:hover ~ .main-content + .right-bar .trends-card h6 {
+  font-size: 0.9rem;
+  margin-bottom: 0.8rem;
+}
+
+.trend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.1rem;
+  transition: all 0.3s ease;
+}
+
+.sidebar:hover ~ .main-content + .right-bar .trend-item {
+  gap: 0.4rem;
+  margin-bottom: 0.8rem;
+}
+
+.trend-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #1877f2;
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+}
+
+.sidebar:hover ~ .main-content + .right-bar .trend-avatar {
+  width: 24px;
+  height: 24px;
+}
+
+.trend-user {
+  font-weight: 500;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.sidebar:hover ~ .main-content + .right-bar .trend-user {
+  font-size: 0.85rem;
+}
+
+.trend-followers {
+  font-size: 0.92rem;
+  color: #888;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.sidebar:hover ~ .main-content + .right-bar .trend-followers {
+  font-size: 0.8rem;
+}
+
+.search-bar-container {
+  position: relative;
+  width: 100%;
+  margin-bottom: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.sidebar:hover ~ .main-content + .right-bar .search-bar-container {
+  margin-bottom: 1rem;
+}
+
+.search-bar-input {
+  width: 100%;
+  padding: 0.6rem 1rem 0.6rem 2.2rem;
+  border-radius: 999px;
+  border: none;
+  background: #f1f3f4;
+  font-size: 1rem;
+  outline: none;
+  color: #222;
+  box-shadow: none;
+  transition: all 0.3s ease;
+}
+
+.sidebar:hover ~ .main-content + .right-bar .search-bar-input {
+  padding: 0.4rem 0.8rem 0.4rem 1.8rem;
+  font-size: 0.9rem;
+}
+
+.search-icon {
+  position: absolute;
+  left: 0.9rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #888;
+  font-size: 1.1rem;
+  pointer-events: none;
+  transition: all 0.3s ease;
+}
+
+.sidebar:hover ~ .main-content + .right-bar .search-icon {
+  left: 0.7rem;
+  font-size: 1rem;
+}

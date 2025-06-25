@@ -1,0 +1,75 @@
+.sidebar{
+    position: fixed;
+}
+
+
+.settings-page {
+    display: flex;
+    flex-direction: column;
+    padding: 40px;
+    color: white;
+    background-color: #15202b;
+    overflow-y: auto;
+}
+
+.settings-page h2 {
+    font-size: 28px;
+    margin-bottom: 30px;
+    color: #1da1f2;
+}
+
+.setting-item {
+    margin-bottom: 25px;
+    display: flex;
+    flex-direction: column;
+}
+
+.setting-item label {
+    margin-bottom: 8px;
+    font-size: 16px;
+    color: #ccc;
+}
+
+.setting-item input[type="text"],
+.setting-item input[type="email"] {
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #38444d;
+    background-color: #192734;
+    color: white;
+}
+
+.setting-item.switch {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.setting-item.switch input[type="checkbox"] {
+    transform: scale(1.5);
+}
+
+.logout-btn {
+    margin-top: -10px;
+    background-color: #e0245e;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 30px;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.logout-btn:hover {
+    background-color: #c81e50;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .settings-page {
+        padding: 20px;
+    }
+}

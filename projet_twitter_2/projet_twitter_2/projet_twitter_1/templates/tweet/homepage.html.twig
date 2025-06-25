@@ -1,0 +1,94 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edition détails| {{ parent() }}{% endblock %}
+
+{% block body %}
+    <div class="container">
+{#        <a href="{{ path ("all_edition") }}" class=" text-decoration-none ">Retour</a>#}
+        <div class="row mt-5">
+            <h1 class="d-inline mb-5">Page d'accueil</h1>
+
+            <div class="col-12 col-md-8 ps-5">
+                {% for tweet in tweets %}
+                
+                    <div class="card mb-4 shadow-sm">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h3 class="card-title mb-0">
+                                    <a href="{{ path('tweet_show', {'id': tweet.id}) }}" class="text-decoration-none text-dark">
+                                        {{ tweet.title }}
+                                    </a>
+                                </h3>
+                                <div class="d-flex gap-2">
+                                    {% set userLiked = false %}
+                                    {% set userRetweeted = false %}
+                                    {% for t in tweets %}
+                                        {% if t.type == 'like' and t.idParent == tweet.id and t.author == app.user %}
+                                            {% set userLiked = true %}
+                                        {% endif %}
+                                        {% if t.type == 'retweet' and t.idParent == tweet.id and t.author == app.user %}
+                                            {% set userRetweeted = true %}
+                                        {% endif %}
+                                    {% endfor %}
+                                    <a href="{{ path('tweet_like', {'id': tweet.id}) }}" 
+                                       class="btn btn-outline-danger btn-sm {% if userLiked %}active{% endif %}">
+                                        <i class="fas fa-heart"></i> J'aime
+                                    </a>
+                                    <a href="{{ path('tweet_retweet', {'id': tweet.id}) }}" 
+                                       class="btn btn-outline-success btn-sm {% if userRetweeted %}active{% endif %}">
+                                        <i class="fas fa-retweet"></i> Retweet
+                                    </a>
+                                    <a href="{{ path('tweet_comment', {'id': tweet.id}) }}"
+                                       class="btn btn-outline-info btn-sm">
+                                        <i class="fas fa-comment"></i> Commenter
+                                    </a>
+                                    {% if app.user and app.user == tweet.author %}
+                                        <a href="{{ path('edit_tweet', {'id': tweet.id}) }}" class="btn btn-outline-primary btn-sm">
+                                            <i class="fas fa-edit"></i> Modifier
+                                        </a>
+                                        <a href="{{ path('delete_tweet', {'id': tweet.id}) }}" class="btn btn-outline-danger btn-sm">
+                                            <i class="fas fa-trash"></i> Supprimer
+                                        </a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="row align-items-center">
+                                <div class="col-md-4">
+                                    <img src="{{ tweet.picture }}" alt="Image" class="img-fluid rounded">
+                                </div>
+                                <div class="col-md-8 d-flex flex-column justify-content-between">
+                                    <h2 class="mb-3">{{ tweet.createdAt|date('Y-m-d') }}</h2>
+                                    <p class="mb-3">
+                                        {{ tweet.content }}
+                                    </p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <p class="text-muted mb-0">{{ tweet.author.pseudo }}</p>
+                                        <div class="d-flex gap-2">
+                                            <span class="badge bg-danger">{{ tweet.getLikesCount(tweets) }}</span>
+                                            <span class="badge bg-success">{{ tweet.getRetweetsCount(tweets) }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="col-12 col-md-4  p-5">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Actions</h5>
+                        <div class="d-grid gap-2">
+                            <a href="{{ path('add_tweet') }}" class="btn btn-primary">
+                                <i class="fas fa-plus"></i> Ajouter un tweet
+                            </a>
+                            <a href="{{ path('user_profile') }}" class="btn btn-outline-primary">
+                                <i class="fas fa-user"></i> Mon Profil
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
