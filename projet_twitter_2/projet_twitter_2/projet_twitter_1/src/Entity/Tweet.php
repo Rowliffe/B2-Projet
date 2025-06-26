@@ -33,7 +33,7 @@ class Tweet
 
     #[ORM\ManyToOne(inversedBy: 'tweets')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?user $author = null;
+    private ?User $author = null;
 
     public function getId(): ?int
     {
@@ -112,12 +112,12 @@ class Tweet
         return $this;
     }
 
-    public function getAuthor(): ?user
+    public function getAuthor(): ?User
     {
         return $this->author;
     }
 
-    public function setAuthor(?user $author): static
+    public function setAuthor(?User $author): static
     {
         $this->author = $author;
 

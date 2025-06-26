@@ -1,82 +1,140 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../styles/profile.css';
-import SharedSidebar from "./SharedSidebar.jsx";
-import SharedRightSidebar from "./SharedRightSidebar.jsx";
-import { Link } from "react-router-dom";
-import ResponsiveSidebar from "./ResponsiveSidebar.jsx";
 
-// trends and other data moved to SharedRightSidebar or will be managed locally
+const EditProfile = () => {
+    const [formData, setFormData] = useState({
+        name: '',
+        lastname: '',
+        pseudo: '',
+        photo: '',
+        password: ''
+    });
 
-// New component for the main profile content area
-const ProfileMainContent = () => {
-    const [activeTab, setActiveTab] = useState("publications");
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState('');
+    const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        fetch('http://localhost:8000/api/profile', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        })
+            .then(res => {
+                if (!res.ok) throw new Error('Erreur chargement profil');
+                return res.json();
+            })
+            .then(data => {
+                setFormData({
+                    name: data.user.name || '',
+                    lastname: data.user.lastname || '',
+                    pseudo: data.user.pseudo || '',
+                    photo: data.user.photo || '',
+                    password: ''
+                });
+                setLoading(false);
+            })
+            .catch(err => {
+                setError(err.message);
+                setLoading(false);
+            });
+    }, [token]);
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({ ...prev, [name]: value }));
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        try {
+            const res = await fetch('http://localhost:8000/api/profile/edit', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            });
+
+            if (!res.ok) throw new Error('Erreur lors de la mise à jour');
+            navigate('/profile');
+        } catch (err) {
+            setError(err.message);
+        }
+    };
+
+    if (loading) return <div>Chargement...</div>;
+    if (error) return <div className="error">{error}</div>;
 
     return (
-        <div className="profile-content-custom">
-            <div className="profile-header-custom">
-                <div className="profile-pic">
-                    <i className="bi bi-person" />
+        <div className="edit-profile-container">
+            <h2>Modifier mon profil</h2>
+            <form className="edit-profile-form" onSubmit={handleSubmit}>
+                <div className="form-group">
+                    <label htmlFor="name">Nom</label>
+                    <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        value={formData.name}
+                        onChange={handleChange}
+                        className="form-input"
+                    />
                 </div>
-                <div className="profile-user-row">
-                    <span className="profile-username">@User_1</span>
-                    <Link to="/editprofile" className="profile-edit-link">
-                        <button className="profile-edit-btn">Modifier le profil</button>
-                    </Link>
+                <div className="form-group">
+                    <label htmlFor="lastname">Prénom</label>
+                    <input
+                        type="text"
+                        id="lastname"
+                        name="lastname"
+                        value={formData.lastname}
+                        onChange={handleChange}
+                        className="form-input"
+                    />
                 </div>
-                <div className="profile-stats-row">
-                    <span>2 publications</span>
-                    <span>150 followers</span>
-                    <span>126 suivi(e)s</span>
+                <div className="form-group">
+                    <label htmlFor="pseudo">Pseudo</label>
+                    <input
+                        type="text"
+                        id="pseudo"
+                        name="pseudo"
+                        value={formData.pseudo}
+                        onChange={handleChange}
+                        className="form-input"
+                    />
                 </div>
-            </div>
-
-            <div className="profile-add-btn-container">
-                <button className="profile-add-btn">
-                    <i className="bi bi-plus" />
-                </button>
-            </div>
-
-            <div className="profile-tabs-custom">
-                {['publications', 'like', 'retweet'].map(tab => (
-                    <button
-                        key={tab}
-                        className={`tab-btn-custom${activeTab === tab ? ' active' : ''}`}
-                        onClick={() => setActiveTab(tab)}
-                    >
-                        {tab}
-                    </button>
-                ))}
-            </div>
-
-            <div className="profile-empty-msg">
-                {activeTab === "publications" && <div>Publications ici</div>}
-                {activeTab === "like" && <div>Likes ici</div>}
-                {activeTab === "retweet" && <div>Retweets ici</div>}
-            </div>
+                <div className="form-group">
+                    <label htmlFor="photo">Photo</label>
+                    <input
+                        type="text"
+                        id="photo"
+                        name="photo"
+                        value={formData.photo}
+                        onChange={handleChange}
+                        className="form-input"
+                    />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="password">Mot de passe (laisser vide pour ne pas changer)</label>
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        value={formData.password}
+                        onChange={handleChange}
+                        className="form-input"
+                    />
+                </div>
+                <button type="submit" className="submit-btn">Sauvegarder</button>
+            </form>
         </div>
     );
 };
 
-// Main component for the profile page layout
-const VueProfileContentOnly = () => {
-    return (
-        <div className="twitter-app">
-            <div className="row">
-                <div className="col-md-3 col-lg-2">
-                    <SharedSidebar />
-                </div>
-                <div className="col-md-6 col-lg-7">
-                    <ProfileMainContent />
-                </div>
-                <div className="col-md-3 col-lg-3 d-none d-md-block"> {/* Hide on small screens, show on medium and larger */}
-                    <SharedRightSidebar />
-                </div>
-                <div className="col-12 d-md-none"> {/* Responsive sidebar for small screens */}
-                    <ResponsiveSidebar />
-                </div>
-            </div>
-        </div>
-    );
-};
-
-export default VueProfileContentOnly;
+export default EditProfile;

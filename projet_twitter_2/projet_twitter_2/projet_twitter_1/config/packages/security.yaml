@@ -10,11 +10,21 @@ security:
                 class: App\Entity\User
                 property: email
     firewalls:
+        api:
+            pattern: ^/api
+            stateless: true
+            # https://symfony.com/doc/current/security/api_key_authentication.html
+            # api_key:
+            #     header: 'X-API-KEY'
+            #     query_parameter: 'api_key'
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
             lazy: true
+            stateless: true
+            jwt: ~
+            entry_point: jwt
             provider: app_user_provider
             form_login:
                 login_path: app_login
@@ -37,6 +47,9 @@ security:
       - { path: ^/inscription, roles: PUBLIC_ACCESS }
       - { path: ^/login, roles: PUBLIC_ACCESS }
       - { path: ^/api/tweets, roles: PUBLIC_ACCESS }
+      - { path: ^/api/csrf-token, roles: PUBLIC_ACCESS }
+      - { path: ^/api/, roles: PUBLIC_ACCESS }
+      - { path: ^/api/login, roles: PUBLIC_ACCESS }
       - { path: ^/, roles: ROLE_USER }
 
 when@test:

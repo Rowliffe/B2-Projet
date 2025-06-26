@@ -185,6 +185,40 @@ class TweetController extends AbstractController
         
         return $this->redirectToRoute('tweet');
     }
+    #[Route('/api/tweet/retweet/{id}', name: 'api_tweet_retweet', methods: ['GET'])]
+    public function apiRetweet(Tweet $tweet, EntityManagerInterface $entityManager): JsonResponse
+    {
+        $user = $this->getUser();
+        if (!$user) {
+            return new JsonResponse(['error' => 'Non authentifié'], 401);
+        }
+
+        $existingRetweet = $entityManager->getRepository(Tweet::class)->findOneBy([
+            'idParent' => $tweet->getId(),
+            'author' => $user,
+            'type' => 'retweet'
+        ]);
+
+        if ($existingRetweet) {
+            $entityManager->remove($existingRetweet);
+            $entityManager->flush();
+            return new JsonResponse(['success' => true, 'message' => 'Retweet annulé']);
+        } else {
+            $tweetRetweet = new Tweet();
+            $tweetRetweet->setAuthor($user);
+            $tweetRetweet->setTitle($tweet->getTitle());
+            $tweetRetweet->setContent($tweet->getContent());
+            $tweetRetweet->setPicture($tweet->getPicture());
+            $tweetRetweet->setCreatedAt(new \DateTimeImmutable('now'));
+            $tweetRetweet->setIdParent($tweet->getId());
+            $tweetRetweet->setType('retweet');
+
+            $entityManager->persist($tweetRetweet);
+            $entityManager->flush();
+
+            return new JsonResponse(['success' => true, 'message' => 'Retweet ajouté']);
+        }
+    }
 
     #[Route('/tweet/comment/{id}', name: 'tweet_comment', methods: ['GET', 'POST'])]
     public function comment(Tweet $tweet, Request $request, EntityManagerInterface $entityManager): Response
@@ -231,6 +265,49 @@ class TweetController extends AbstractController
             'tweets' => $userTweets,
             'likes' => $userLikes,
             'retweets' => $userRetweets
+        ]);
+    }
+
+    #[Route('/api/profile', name: 'api_user_profile', methods: ['GET'])]
+    public function apiUserProfile(EntityManagerInterface $entityManager): JsonResponse
+    {
+        $user = $this->getUser();
+        if (!$user) {
+            return new JsonResponse(['error' => 'Non authentifié'], 401);
+        }
+
+        $tweetRepository = $entityManager->getRepository(Tweet::class);
+
+        // Récupérer les tweets de l'utilisateur
+        $userTweets = $tweetRepository->findBy(['author' => $user, 'type' => null]);
+
+        // Récupérer les likes de l'utilisateur
+        $userLikes = $tweetRepository->findBy(['author' => $user, 'type' => 'like']);
+
+        // Récupérer les retweets de l'utilisateur
+        $userRetweets = $tweetRepository->findBy(['author' => $user, 'type' => 'retweet']);
+
+        return new JsonResponse([
+            'user' => [
+                'id' => $user->getId(),
+                'pseudo' => $user->getPseudo(),
+                'name' => $user->getName(),
+                'lastname' => $user->getLastname(),
+                'photo' => $user->getPhoto()
+            ],
+            'tweets' => array_map(function($tweet) {
+                return [
+                    'id' => $tweet->getId(),
+                    'title' => $tweet->getTitle(),
+                    'content' => $tweet->getContent(),
+                    'picture' => $tweet->getPicture(),
+                    'createdAt' => $tweet->getCreatedAt() ? $tweet->getCreatedAt()->format('Y-m-d H:i:s') : null,
+                    'type' => $tweet->getType(),
+                    'idParent' => $tweet->getIdParent()
+                ];
+            }, $userTweets),
+            'likesCount' => count($userLikes),
+            'retweetsCount' => count($userRetweets)
         ]);
     }
 
@@ -310,5 +387,7 @@ class TweetController extends AbstractController
             return new JsonResponse(['error' => $e->getMessage()], 500);
         }
     }
+
+
 
 }       
