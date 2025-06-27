@@ -137,15 +137,12 @@ class TweetController extends AbstractController
                 $message = 'Like ajouté !';
             }
 
-            // Si c'est une requête API, retourner une réponse JSON
             if (str_contains($request->getPathInfo(), '/api/')) {
                 return new JsonResponse([
                     'success' => true,
                     'message' => $message
                 ]);
             }
-
-            // Sinon, rediriger vers la page précédente
             $referer = $request->headers->get('referer');
             if ($referer) {
                 return $this->redirect($referer);
@@ -164,7 +161,6 @@ class TweetController extends AbstractController
     {
         $user = $this->getUser();
         
-        // Vérifier que l'utilisateur est le propriétaire du tweet
         if ($tweet->getAuthor() !== $user) {
             return new JsonResponse(['error' => 'Vous ne pouvez supprimer que vos propres tweets'], 403);
         }
@@ -276,13 +272,10 @@ class TweetController extends AbstractController
         $user = $this->getUser();
         $tweetRepository = $entityManager->getRepository(Tweet::class);
         
-        // Récupérer les tweets de l'utilisateur
         $userTweets = $tweetRepository->findBy(['author' => $user, 'type' => null]);
         
-        // Récupérer les likes de l'utilisateur
         $userLikes = $tweetRepository->findBy(['author' => $user, 'type' => 'like']);
         
-        // Récupérer les retweets de l'utilisateur
         $userRetweets = $tweetRepository->findBy(['author' => $user, 'type' => 'retweet']);
 
         return $this->render('user/profile.html.twig', [
@@ -297,13 +290,11 @@ class TweetController extends AbstractController
     #[Route('/tweet/{id}', name: 'tweet_show', methods: ['GET'])]
     public function showTweet(Tweet $tweet, EntityManagerInterface $entityManager): Response
     {
-        // Récupérer les commentaires du tweet
         $comments = $entityManager->getRepository(Tweet::class)->findBy([
             'idParent' => $tweet->getId(),
             'type' => 'comment'
         ], ['createdAt' => 'DESC']);
 
-        // Récupérer tous les tweets pour vérifier les likes et retweets
         $tweets = $entityManager->getRepository(Tweet::class)->findAll();
 
         return $this->render('tweet/show.html.twig', [
@@ -341,16 +332,13 @@ class TweetController extends AbstractController
             $tweetRepository = $entityManager->getRepository(Tweet::class);
             $user = $this->getUser();
             
-            // Récupérer seulement les tweets originaux (sans idParent et sans type ou type=null)
             $originalTweets = $tweetRepository->findBy([
                 'idParent' => null,
                 'type' => null
             ], ['createdAt' => 'DESC']);
 
-            // Récupérer tous les tweets pour calculer les likes/retweets
             $allTweets = $tweetRepository->findAll();
 
-            // Si l'utilisateur est connecté, récupérer ses likes et retweets
             $userLikes = [];
             $userRetweets = [];
             if ($user) {
@@ -369,7 +357,7 @@ class TweetController extends AbstractController
                 $author = $tweet->getAuthor();
                 $createdAt = $tweet->getCreatedAt();
                 
-                // Compter les commentaires de ce tweet
+
                 $commentsCount = 0;
                 foreach ($allTweets as $t) {
                     if ($t->getIdParent() === $tweet->getId() && $t->getType() === 'comment') {
@@ -417,16 +405,14 @@ class TweetController extends AbstractController
 
             $tweetRepository = $entityManager->getRepository(Tweet::class);
             
-            // Récupérer uniquement les tweets originaux de l'utilisateur (pas les likes/retweets)
             $userTweets = $tweetRepository->findBy(
                 ['author' => $user, 'type' => null], 
                 ['createdAt' => 'DESC']
             );
 
-            // Récupérer tous les tweets pour calculer les likes/retweets
             $allTweets = $tweetRepository->findAll();
 
-            // Récupérer les likes et retweets de l'utilisateur
+            
             $userLikes = [];
             $userRetweets = [];
             $userLikesData = $tweetRepository->findBy(['author' => $user, 'type' => 'like']);
@@ -443,7 +429,7 @@ class TweetController extends AbstractController
                 $author = $tweet->getAuthor();
                 $createdAt = $tweet->getCreatedAt();
                 
-                // Compter les commentaires de ce tweet
+
                 $commentsCount = 0;
                 foreach ($allTweets as $t) {
                     if ($t->getIdParent() === $tweet->getId() && $t->getType() === 'comment') {
@@ -501,31 +487,24 @@ class TweetController extends AbstractController
 
             $picturePath = null;
 
-            // Gérer l'URL d'image
             $imageUrl = $request->request->get('imageUrl');
             if ($imageUrl && filter_var($imageUrl, FILTER_VALIDATE_URL)) {
                 $picturePath = $imageUrl;
             } else {
-                // Gérer l'upload d'image
                 $pictureFile = $request->files->get('picture');
                 if ($pictureFile) {
-                    // Vérifier que c'est bien une image
                     $allowedMimeTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
                     if (!in_array($pictureFile->getMimeType(), $allowedMimeTypes)) {
                         return new JsonResponse(['error' => 'Format d\'image non supporté. Utilisez JPG, PNG, GIF ou WebP.'], 400);
                     }
 
-                    // Vérifier la taille du fichier (max 5MB)
                     if ($pictureFile->getSize() > 5000000) {
                         return new JsonResponse(['error' => 'L\'image est trop volumineuse. Taille maximum : 5MB.'], 400);
                     }
 
-                    // Générer un nom unique pour le fichier
                     $originalFilename = pathinfo($pictureFile->getClientOriginalName(), PATHINFO_FILENAME);
                     $safeFilename = transliterator_transliterate('Any-Latin; Latin-ASCII; [^A-Za-z0-9_] remove; Lower()', $originalFilename);
                     $newFilename = $safeFilename.'-'.uniqid().'.'.$pictureFile->guessExtension();
-
-                    // Déplacer le fichier dans le dossier d'upload
                     try {
                         $uploadsDirectory = $this->getParameter('kernel.project_dir').'/public/uploads/tweets';
                         $pictureFile->move($uploadsDirectory, $newFilename);
@@ -589,7 +568,7 @@ class TweetController extends AbstractController
         try {
             $tweetRepository = $entityManager->getRepository(Tweet::class);
             
-            // Récupérer les commentaires du tweet
+
             $comments = $tweetRepository->findBy([
                 'idParent' => $tweet->getId(),
                 'type' => 'comment'
@@ -645,12 +624,12 @@ class TweetController extends AbstractController
             $comment->setCreatedAt(new \DateTimeImmutable());
             $comment->setIdParent($tweet->getId());
             $comment->setType('comment');
-            $comment->setTitle(''); // Les commentaires n'ont pas de titre
+            $comment->setTitle('');
 
             $entityManager->persist($comment);
             $entityManager->flush();
 
-            // Retourner le commentaire créé
+
             $author = $comment->getAuthor();
             $createdAt = $comment->getCreatedAt();
 
@@ -688,15 +667,15 @@ class TweetController extends AbstractController
 
             $tweetRepository = $entityManager->getRepository(Tweet::class);
             
-            // Récupérer les likes de l'utilisateur
+
             $userLikes = $tweetRepository->findBy(
                 ['author' => $user, 'type' => 'like'], 
                 ['createdAt' => 'DESC']
             );
 
-            // Récupérer les tweets originaux likés
+
             $likedTweetsArray = [];
-            $allTweets = $tweetRepository->findAll(); // Récupérer une seule fois
+            $allTweets = $tweetRepository->findAll();
             
             foreach ($userLikes as $like) {
                 $originalTweet = $tweetRepository->find($like->getIdParent());
@@ -704,7 +683,7 @@ class TweetController extends AbstractController
                     $author = $originalTweet->getAuthor();
                     $createdAt = $originalTweet->getCreatedAt();
                     
-                    // Calculer les stats du tweet original
+
                     $likesCount = $originalTweet->getLikesCount($allTweets);
                     $retweetsCount = $originalTweet->getRetweetsCount($allTweets);
                     $commentsCount = $originalTweet->getCommentsCount($allTweets);
@@ -720,8 +699,8 @@ class TweetController extends AbstractController
                         'likesCount' => $likesCount,
                         'retweetsCount' => $retweetsCount,
                         'commentsCount' => $commentsCount,
-                        'isLiked' => true, // Puisque c'est dans ses likes
-                        'isRetweeted' => false, // On pourrait calculer mais pas nécessaire ici
+                        'isLiked' => true,
+                        'isRetweeted' => false,
                         'likedAt' => $like->getCreatedAt() ? $like->getCreatedAt()->format('Y-m-d H:i:s') : null,
                         'author' => $author ? [
                             'id' => $author->getId(),
@@ -758,7 +737,7 @@ class TweetController extends AbstractController
 
             $tweetRepository = $entityManager->getRepository(Tweet::class);
             
-            // Récupérer les retweets de l'utilisateur
+
             $userRetweets = $tweetRepository->findBy(
                 ['author' => $user, 'type' => 'retweet'], 
                 ['createdAt' => 'DESC']
@@ -807,7 +786,7 @@ class TweetController extends AbstractController
         
         $response = new BinaryFileResponse($filePath);
         
-        // Ajouter les en-têtes CORS
+
         $response->headers->set('Access-Control-Allow-Origin', '*');
         $response->headers->set('Access-Control-Allow-Methods', 'GET');
         $response->headers->set('Access-Control-Allow-Headers', 'Content-Type');

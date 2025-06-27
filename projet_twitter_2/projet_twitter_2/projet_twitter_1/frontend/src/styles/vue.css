@@ -1,11 +1,11 @@
-/* Layout principal */
+
 .app-container {
   display: flex;
   min-height: 100vh;
   background-color: #f7f9fa;
 }
 
-/* Sidebar */
+
 .sidebar {
   width: 68px;
   background-color: #1c2c4c;
@@ -91,7 +91,7 @@
   background-color: #3d4e6f;
 }
 
-/* Contenu principal */
+
 .main-content {
   flex: 1;
   margin-left: 68px;
@@ -107,7 +107,7 @@
   margin-left: 275px;
 }
 
-/* Barre de droite */
+
 .right-bar {
   width: 275px;
   position: fixed;
@@ -145,7 +145,7 @@
   background-color: #1a91da;
 }
 
-/* Styles pour le profil */
+
 .profile-content {
   background-color: white;
   min-height: 100vh;
@@ -205,13 +205,13 @@
   font-size: 1.1rem;
 }
 
-/* Ajustement pour les icÃ´nes Bootstrap */
+
 .bi {
   display: inline-block;
   vertical-align: -0.125em;
 }
 
-/* --- PROFIL COLONNE CENTRALE --- */
+
 .profile-content-custom {
   background: #fff;
   border-left: 1px solid #e3e6ea;
@@ -336,7 +336,7 @@
   font-size: 1.1rem;
 }
 
-/* Responsive ajustement */
+
 @media (max-width: 900px) {
   .right-bar {
     display: none;

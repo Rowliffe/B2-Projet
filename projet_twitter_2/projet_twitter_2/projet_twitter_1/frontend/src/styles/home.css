@@ -1,4 +1,4 @@
-/* React/my-react-app/src/composants/home.css */
+
 
 .twitter-app {
     display: flex;
@@ -180,7 +180,7 @@
 .header {
     display: flex;
     gap: 2rem;
-    background-color: #15202b; /* couleur sombre comme sur l'image */
+    background-color: #15202b; 
     padding: 1rem 2rem;
 }
 
@@ -205,7 +205,7 @@
     background-color: white;
 }
 
-/* Styles pour les images dans les tweets */
+
 .tweet-media {
     width: 100%;
     max-width: 500px;
@@ -239,7 +239,7 @@
     cursor: pointer;
 }
 
-/* Styles responsifs pour les images */
+
 @media (max-width: 768px) {
     .tweet-media,
     .tweet-image {
@@ -257,7 +257,7 @@
     }
 }
 
-/* Styles pour les tweets populaires dans la sidebar */
+
 .popular-tweet {
     display: flex;
     align-items: flex-start;

@@ -59,19 +59,16 @@ class AuthController extends AbstractController
     ): JsonResponse {
         $data = json_decode($request->getContent(), true);
 
-        // Validation des données requises
         if (empty($data['email']) || empty($data['password']) || empty($data['name']) || 
             empty($data['lastname']) || empty($data['pseudo']) || empty($data['country'])) {
             return new JsonResponse(['error' => 'Tous les champs obligatoires doivent être remplis'], 400);
         }
 
-        // Vérifier si l'email existe déjà
         $existingUser = $em->getRepository(User::class)->findOneBy(['email' => $data['email']]);
         if ($existingUser) {
             return new JsonResponse(['error' => 'Cet email est déjà utilisé'], 400);
         }
 
-        // Vérifier si le pseudo existe déjà
         $existingPseudo = $em->getRepository(User::class)->findOneBy(['pseudo' => $data['pseudo']]);
         if ($existingPseudo) {
             return new JsonResponse(['error' => 'Ce pseudo est déjà utilisé'], 400);
@@ -79,22 +76,20 @@ class AuthController extends AbstractController
 
         try {
             $user = new User();
+            $user->setRoles(['ROLE_USER']);
             $user->setEmail($data['email']);
             $user->setName($data['name']);
             $user->setLastname($data['lastname']);
             $user->setPseudo($data['pseudo']);
             $user->setCountry($data['country']);
             
-            // Date de naissance (optionnelle)
             if (!empty($data['birthday'])) {
                 $birthday = new \DateTime($data['birthday']);
                 $user->setBirthday($birthday);
             } else {
-                // Date par défaut si non fournie
                 $user->setBirthday(new \DateTime('1990-01-01'));
             }
 
-            // Champs optionnels
             if (isset($data['phone'])) {
                 $user->setPhone($data['phone']);
             }
@@ -105,14 +100,12 @@ class AuthController extends AbstractController
                 $user->setPhoto($data['photo']);
             }
 
-            // Hasher le mot de passe
             $hashedPassword = $hasher->hashPassword($user, $data['password']);
             $user->setPassword($hashedPassword);
 
             $em->persist($user);
             $em->flush();
 
-            // Créer un token JWT pour l'utilisateur nouvellement créé
             $token = $jwtManager->create($user);
 
             return new JsonResponse([
@@ -172,7 +165,6 @@ class AuthController extends AbstractController
 
         $data = json_decode($request->getContent(), true);
 
-        // Mettre à jour les champs modifiables
         if (isset($data['name'])) {
             $user->setName($data['name']);
         }
@@ -182,7 +174,6 @@ class AuthController extends AbstractController
         }
         
         if (isset($data['pseudo'])) {
-            // Vérifier si le pseudo est déjà utilisé par un autre utilisateur
             $existingUser = $em->getRepository(User::class)->findOneBy(['pseudo' => $data['pseudo']]);
             if ($existingUser && $existingUser->getId() !== $user->getId()) {
                 return new JsonResponse(['error' => 'Ce pseudo est déjà utilisé'], 400);
@@ -206,7 +197,6 @@ class AuthController extends AbstractController
             $user->setPhoto($data['photo']);
         }
 
-        // Mettre à jour le mot de passe si fourni
         if (isset($data['password']) && !empty($data['password'])) {
             $hashedPassword = $hasher->hashPassword($user, $data['password']);
             $user->setPassword($hashedPassword);

@@ -26,19 +26,19 @@ html, body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
-  width: 100%; /* Ensure html and body take full width */
-  overflow-x: hidden; /* Empêcher le défilement horizontal */
+  width: 100%; 
+  overflow-x: hidden; 
 }
 
-/* Cacher les barres de défilement mais permettre le défilement */
+
 html {
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none; 
+  -ms-overflow-style: none; 
 }
 
 html::-webkit-scrollbar,
 body::-webkit-scrollbar {
-  width: 0; /* Webkit */
+  width: 0; 
   background: transparent;
 }
 
@@ -79,14 +79,14 @@ button:focus-visible {
   }
 }
 
-/* Bootstrap-like Grid System (Global) */
+
 .container-fluid {
     width: 100%;
     padding-right: 15px;
     padding-left: 15px;
     margin-right: auto;
     margin-left: auto;
-    max-width: 100%; /* Added to ensure full width */
+    max-width: 100%; 
 }
 
 @media (min-width: 768px) {
@@ -168,7 +168,7 @@ button:focus-visible {
     .col-lg-12 { flex: 0 0 100%; max-width: 100%; }
 }
 
-/* Utility classes for display (Global) */
+
 .d-none {
     display: none !important;
 }
@@ -191,15 +191,15 @@ button:focus-visible {
     overflow-x: hidden;
 }
 
-/* Styles globaux pour cacher toutes les barres de défilement */
+
 * {
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* Internet Explorer 10+ */
+    scrollbar-width: none; 
+    -ms-overflow-style: none; 
 }
 
 *::-webkit-scrollbar {
     width: 0;
-    background: transparent; /* Chrome/Safari/Webkit */
+    background: transparent; 
 }
 
 

@@ -1,7 +1,7 @@
 var nameCheck = /^[-_a-zA-Z0-9]{4,22}$/;
 var tokenCheck = /^[-_/+a-zA-Z0-9]{24,}$/;
 
-// Generate and double-submit a CSRF token in a form field and a cookie, as defined by Symfony's SameOriginCsrfTokenManager
+
 document.addEventListener('submit', function (event) {
     var csrfField = event.target.querySelector('input[data-controller="csrf-protection"], input[name="_csrf_token"]');
 
@@ -24,8 +24,8 @@ document.addEventListener('submit', function (event) {
     }
 });
 
-// When @hotwired/turbo handles form submissions, send the CSRF token in a header in addition to a cookie
-// The `framework.csrf_protection.check_header` config option needs to be enabled for the header to be checked
+
+
 document.addEventListener('turbo:submit-start', function (event) {
     var csrfField = event.detail.formSubmission.formElement.querySelector('input[data-controller="csrf-protection"], input[name="_csrf_token"]');
 
@@ -40,7 +40,7 @@ document.addEventListener('turbo:submit-start', function (event) {
     }
 });
 
-// When @hotwired/turbo handles form submissions, remove the CSRF cookie once a form has been submitted
+
 document.addEventListener('turbo:submit-end', function (event) {
     var csrfField = event.detail.formSubmission.formElement.querySelector('input[data-controller="csrf-protection"], input[name="_csrf_token"]');
 

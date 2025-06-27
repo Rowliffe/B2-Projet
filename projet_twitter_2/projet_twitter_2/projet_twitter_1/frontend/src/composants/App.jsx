@@ -15,7 +15,7 @@ import ResponsiveNavbar from "./ResponsiveNavbar.jsx";
 export default function App() {
     const location = useLocation();
     
-    // Pages sans navbar (login et register)
+
     const authPages = ['/login', '/register'];
     const showNavbar = !authPages.includes(location.pathname);
     

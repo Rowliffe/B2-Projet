@@ -29,7 +29,7 @@ class CreateTweetCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        // First, check if we have a test user, if not create one
+
         $userRepository = $this->entityManager->getRepository(User::class);
         $user = $userRepository->findOneBy(['email' => 'test@example.com']);
 
@@ -50,7 +50,7 @@ class CreateTweetCommand extends Command
             $io->success('Created test user: test@example.com');
         }
 
-        // Create a new tweet
+
         $tweet = new Tweet();
         $tweet->setTitle('Mon premier tweet');
         $tweet->setContent('Ceci est un tweet de test créé via la commande Symfony !');

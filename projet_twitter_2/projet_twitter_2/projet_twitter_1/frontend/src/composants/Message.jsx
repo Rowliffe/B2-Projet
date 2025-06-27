@@ -6,7 +6,7 @@ import '../styles/message.css';
 import ResponsiveSidebar from "./ResponsiveSidebar.jsx";
 
 const MessagePage = () => {
-    const location = useLocation(); // Ajouté
+    const location = useLocation();
     const [selectedUser, setSelectedUser] = useState(null);
     const [messages, setMessages] = useState({
         'John Doe': [
@@ -139,7 +139,7 @@ const MessagePage = () => {
                     </div>
                 </div>
             </div>
-            {/* Barre de navigation inférieure */}
+          
             <ResponsiveSidebar />
 
         </div>

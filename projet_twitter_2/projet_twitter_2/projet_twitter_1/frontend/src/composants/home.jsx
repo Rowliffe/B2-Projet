@@ -17,7 +17,7 @@ export default function TwitterLikeInterface() {
         { id: 3, username: 'User  1', handle: '@newuser', description: 'Description du Post', time: '5m', contentExtra: "Description d'un post avec un contenu intéressant" }
     ];
 
-    // trends moved to SharedRightSidebar
+
 
     useEffect(() => {
         if (location.pathname === '/home') setActiveTab('home');
@@ -31,21 +31,20 @@ export default function TwitterLikeInterface() {
 
     return (
         <div className="twitter-app">
-            {/* Sidebar */}
+
             <SharedSidebar />
 
-            {/* Main Content */}
+
             <div className="main-content-home pb-5">
-                {/* Render posts based on the active tab */}
+
                 <div className="main-content-body">
                     <Outlet />
                 </div>
 
             </div>
 
-            {/* Right Sidebar - Trends */}
             <SharedRightSidebar />
-            {/* Responsive Bottom Navigation */}
+
             <ResponsiveSidebar activeTab={activeTab} />
         </div>
     );

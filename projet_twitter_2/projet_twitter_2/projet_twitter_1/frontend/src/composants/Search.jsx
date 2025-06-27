@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Home, MessageCircle, Search, Settings, User } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
-import '../styles/search.css'; // Import your new CSS file
+import '../styles/search.css';
 
 export default function Tendances() {
     const [activeTab, setActiveTab] = useState('principale');
     const location = useLocation();
 
-    // Mock data for trends
+
     const trends = [
         { id: 1, tag: '#Technologies' },
         { id: 2, tag: '#Technologies' },
@@ -17,13 +17,12 @@ export default function Tendances() {
     ];
 
     useEffect(() => {
-        // Update active tab based on the current location if needed for navigation
-        // For this page, activeTab will be managed internally for tabs like 'Principale', 'Plus récent' etc.
+        
     }, [location]);
 
     return (
         <div className="twitter-app">
-            {/* Sidebar - Copied from home.jsx */}
+           
             <div className="tendances-sidebar">
                 <div className="tendances-sidebar-logo">
                     <span>L</span>
@@ -51,7 +50,7 @@ export default function Tendances() {
                 <button className="add-post-btn">ADD A POST</button>
             </div>
 
-            {/* Main Content for Tendances Page */}
+           
             <div className="main-content-tendances">
                 <div className="tendances-search-header">
                     <div className="search-bar">
@@ -96,7 +95,7 @@ export default function Tendances() {
                         ))}
                     </div>
 
-                    {/* Filters Section */}
+               
                     <div className="filters-section">
                         <h2>Filtres</h2>
                         <div className="filter-group">

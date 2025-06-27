@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Search, Heart } from 'lucide-react';
-import '../styles/home.css'; // Assuming right sidebar styles are in home.css or will be consolidated
+import '../styles/home.css';
 
 export default function SharedRightSidebar() {
     const [topTweets, setTopTweets] = useState([]);
@@ -22,7 +22,7 @@ export default function SharedRightSidebar() {
 
             if (response.ok) {
                 const data = await response.json();
-                // Trier par nombre de likes et prendre les 3 premiers
+        
                 const sortedTweets = data.sort((a, b) => (b.likesCount || 0) - (a.likesCount || 0));
                 setTopTweets(sortedTweets.slice(0, 3));
             }

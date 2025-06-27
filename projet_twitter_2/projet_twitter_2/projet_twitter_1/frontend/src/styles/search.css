@@ -1,25 +1,25 @@
 .twitter-app {
     display: flex;
     height: 100vh;
-    background-color: #15202b; /* Synchronized with home.css */
-    color: white; /* Synchronized with home.css */
+    background-color: #15202b; 
+    color: white; 
     font-family: Arial, sans-serif;
 }
 
 .tendances-sidebar {
     width: 250px;
-    background-color: #192734; /* Synchronized with home.css */
+    background-color: #192734; 
     padding: 20px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    border-right: 1px solid #38444d; /* Synchronized with home.css */
+    border-right: 1px solid #38444d; 
 }
 
 .tendances-sidebar-logo {
     font-size: 2.5em;
     font-weight: bold;
-    color: #cbd5e0; /* Kept as light text color as per your previous instruction */
+    color: #cbd5e0; 
     margin-bottom: 30px;
     background-color: transparent;
     width: auto;
@@ -36,7 +36,7 @@
     padding: 10px 15px;
     margin-bottom: 15px;
     border-radius: 20px;
-    color: white; /* Synchronized with home.css */
+    color: white; 
     text-decoration: none;
     transition: background-color 0.3s ease;
 }
@@ -51,7 +51,7 @@
 }
 
 .add-post-btn {
-    background-color: #1da1f2; /* Synchronized with home.css */
+    background-color: #1da1f2; 
     color: white;
     border: none;
     padding: 12px 25px;
@@ -76,7 +76,7 @@
 }
 
 .tendances-search-header {
-    background-color: #192734; /* Synchronized with trends-container in home.css */
+    background-color: #192734; 
     border-radius: 10px;
     padding: 15px;
     margin-bottom: 20px;
@@ -85,7 +85,7 @@
 .tendances-search-header .search-bar {
     display: flex;
     align-items: center;
-    background-color: #253341; /* Synchronized with search-bar in home.css */
+    background-color: #253341; 
     border-radius: 25px;
     padding: 8px 15px;
     margin-bottom: 15px;
@@ -94,7 +94,7 @@
 .tendances-search-header .search-bar input {
     background: none;
     border: none;
-    color: white; /* Synchronized with home.css */
+    color: white; 
     margin-left: 10px;
     width: 100%;
     outline: none;
@@ -103,20 +103,20 @@
 .tendances-tabs {
     display: flex;
     justify-content: space-around;
-    border-bottom: 1px solid #38444d; /* Synchronized with home.css border */
+    border-bottom: 1px solid #38444d; 
     margin-top: 10px;
 }
 
 .tendances-tab {
     background: none;
     border: none;
-    color: white; /* Synchronized with home.css */
+    color: white; 
     padding: 10px 15px;
     cursor: pointer;
     font-size: 1em;
     font-weight: bold;
     transition: color 0.3s ease, border-bottom 0.3s ease;
-    border-bottom: 3px solid transparent; /* For active indicator */
+    border-bottom: 3px solid transparent; 
 }
 
 .tendances-tab:hover {
@@ -124,8 +124,8 @@
 }
 
 .tendances-tab.active {
-    color: white; /* Synchronized with home.css active tab */
-    border-bottom-color: white; /* Synchronized with home.css active tab */
+    color: white; 
+    border-bottom-color: white; 
 }
 
 .tendances-body {
@@ -136,23 +136,23 @@
 
 .trends-section {
     flex: 2;
-    background-color: #192734; /* Synchronized with trends-container in home.css */
+    background-color: #192734; 
     border-radius: 10px;
     padding: 20px;
 }
 
 .trends-section h2 {
-    color: white; /* Synchronized with home.css */
+    color: white; 
     margin-bottom: 15px;
     font-size: 1.2em;
 }
 
 .trend-item-tendances {
-    background-color: #253341; /* Using search-bar color from home.css for consistency */
+    background-color: #253341; 
     border-radius: 8px;
     padding: 15px;
     margin-bottom: 10px;
-    color: white; /* Synchronized with home.css */
+    color: white; 
 }
 
 .trend-item-tendances h3 {
@@ -162,13 +162,13 @@
 
 .filters-section {
     flex: 1;
-    background-color: #192734; /* Synchronized with trends-container in home.css */
+    background-color: #192734; 
     border-radius: 10px;
     padding: 20px;
 }
 
 .filters-section h2 {
-    color: white; /* Synchronized with home.css */
+    color: white; 
     margin-bottom: 15px;
     font-size: 1.2em;
 }
@@ -178,7 +178,7 @@
 }
 
 .filter-group h3 {
-    color: white; /* Synchronized with home.css */
+    color: white; 
     margin-bottom: 10px;
     font-size: 1em;
 }
@@ -197,8 +197,8 @@
     width: 100%;
     padding: 8px;
     border-radius: 5px;
-    border: 1px solid #38444d; /* Synchronized with home.css border */
-    background-color: #253341; /* Synchronized with search-bar in home.css */
-    color: white; /* Synchronized with home.css */
+    border: 1px solid #38444d; 
+    background-color: #253341; 
+    color: white; 
     outline: none;
 }

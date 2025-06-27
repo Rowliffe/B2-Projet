@@ -1,4 +1,3 @@
-// LoginPage.jsx
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import '../styles/login.css';
@@ -10,7 +9,6 @@ const LoginPage = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        // Vérifie si un token est stocké
         const savedToken = localStorage.getItem('token');
         if (savedToken) {
             navigate('/home');
@@ -88,6 +86,7 @@ const LoginPage = () => {
                             />
                             <label htmlFor="remember-me">Se souvenir de moi</label>
                         </div>
+                        
                         <Link to="/register" className="forgot-password-btn">
                             Pas encore inscrit&nbsp;?
                         </Link>

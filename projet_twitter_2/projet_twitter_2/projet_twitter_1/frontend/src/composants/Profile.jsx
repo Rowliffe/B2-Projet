@@ -12,11 +12,11 @@ const Profile = () => {
     const [loading, setLoading] = useState(true);
     const [tweetsLoading, setTweetsLoading] = useState(true);
     const [error, setError] = useState('');
-    const [activeTab, setActiveTab] = useState('tweets'); // tweets, likes, retweets
+    const [activeTab, setActiveTab] = useState('tweets');
     const token = localStorage.getItem('token') || sessionStorage.getItem('token');
     const navigate = useNavigate();
 
-    // Fonction de déconnexion
+
     const handleLogout = () => {
         localStorage.removeItem('token');
         sessionStorage.removeItem('token');
@@ -29,7 +29,7 @@ const Profile = () => {
             return;
         }
 
-        // Récupérer les informations du profil
+
         const fetchProfile = fetch('http://localhost:8000/api/profile', {
             method: 'GET',
             headers: {
@@ -38,7 +38,7 @@ const Profile = () => {
             }
         });
 
-        // Récupérer les tweets de l'utilisateur
+
         const fetchTweets = fetch('http://localhost:8000/api/my-tweets', {
             method: 'GET',
             headers: {
@@ -47,7 +47,7 @@ const Profile = () => {
             }
         });
 
-        // Récupérer les likes de l'utilisateur
+
         const fetchLikes = fetch('http://localhost:8000/api/my-likes', {
             method: 'GET',
             headers: {
@@ -56,7 +56,7 @@ const Profile = () => {
             }
         });
 
-        // Récupérer les retweets de l'utilisateur
+
         const fetchRetweets = fetch('http://localhost:8000/api/my-retweets', {
             method: 'GET',
             headers: {
@@ -65,10 +65,10 @@ const Profile = () => {
             }
         });
 
-        // Exécuter toutes les requêtes en parallèle
+
         Promise.all([fetchProfile, fetchTweets, fetchLikes, fetchRetweets])
             .then(async ([profileRes, tweetsRes, likesRes, retweetsRes]) => {
-                // Traiter la réponse du profil
+    
                 if (!profileRes.ok) {
                     if (profileRes.status === 401) {
                         localStorage.removeItem('token');
@@ -109,7 +109,7 @@ const Profile = () => {
         });
     };
 
-    // Fonction pour supprimer un tweet
+
     const handleDeleteTweet = async (tweetId) => {
         console.log('=== SUPPRESSION TWEET ===');
         console.log('Tweet ID:', tweetId);
@@ -138,7 +138,7 @@ const Profile = () => {
 
             if (response.ok) {
                 console.log('Suppression réussie');
-                // Supprimer le tweet de la liste locale
+    
                 setUserTweets(prevTweets => {
                     const newTweets = prevTweets.filter(tweet => tweet.id !== tweetId);
                     console.log('Tweets avant:', prevTweets.length, 'après:', newTweets.length);
@@ -166,7 +166,7 @@ const Profile = () => {
             })
                 .then((res) => res.json())
                 .then(() => {
-                    // Mise à jour optimiste des tweets
+
                     setUserTweets(prevTweets =>
                         prevTweets.map(t => {
                             if (t.id === tweetId) {
@@ -197,7 +197,7 @@ const Profile = () => {
             })
                 .then(res => res.json())
                 .then(() => {
-                    // Mise à jour optimiste des tweets
+
                     setUserTweets(prevTweets =>
                         prevTweets.map(t => {
                             if (t.id === tweetId) {
@@ -220,7 +220,7 @@ const Profile = () => {
 
     return (
             <div className="tweet-card" style={{ position: 'relative' }}>
-                {/* Croix de suppression en haut à droite */}
+    
                 <button
                     onClick={(e) => {
                         e.stopPropagation();

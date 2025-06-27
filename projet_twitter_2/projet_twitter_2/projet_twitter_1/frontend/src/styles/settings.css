@@ -67,7 +67,7 @@
     background-color: #c81e50;
 }
 
-/* Responsive */
+
 @media (max-width: 768px) {
     .settings-page {
         padding: 20px;

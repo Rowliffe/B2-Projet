@@ -1,6 +1,6 @@
-/* Fond général sombre */
+
 .sidebar-message {
-    background-color: #15202b; /* même couleur que .header dans home.css */
+    background-color: #15202b; 
     display: flex;
     gap: 1rem;
     height: 100vh;
@@ -16,9 +16,9 @@
     background: #1a8cd8;
 }
 
-/* Conteneur principal de la messagerie */
+
 .message-app {
-    background: #192734; /* couleur sombre comme .trends-container */
+    background: #192734; 
     border-radius: 10px;
     box-shadow: 0 2px 10px rgb(0 0 0 / 0.1);
     overflow: hidden;
@@ -29,19 +29,19 @@
     padding: 1rem 1.5rem;
 }
 
-/* Liste utilisateurs - colonne de gauche */
+
 .message-app .col-md-4 {
     background-color: transparent;
     border-right: 1px solid #22303c;
     color: #fff;
 }
 
-/* Titre "Messages" */
+
 .message-app h4 {
     color: #fff;
 }
 
-/* Chaque utilisateur dans la liste */
+
 .message-app .col-md-4 > div {
     background: none;
     color: #fff;
@@ -54,42 +54,42 @@
     background-color: #22303c;
 }
 
-/* Zone de chat - colonne de droite */
+
 .message-app .col-md-8 {
     background: none;
     color: #fff;
 }
 
-/* Header conversation */
+
 .message-app h5 {
     color: #fff;
     border-bottom: 1px solid #22303c;
 }
 
-/* Messages container */
+
 .message-app .flex-grow-1.overflow-auto {
     background: none;
 }
 
-/* Message envoyé */
+
 .message-app .flex-grow-1 .mb-2.d-flex.justify-content-end > div {
     background-color: #1da1f2;
     color: #fff;
 }
 
-/* Message reçu */
+
 .message-app .flex-grow-1 .mb-2.d-flex.justify-content-start > div {
     background-color: #22303c;
     border: 1px solid #38444d;
     color: #fff;
 }
 
-/* Champ de saisie et bouton */
+
 .message-app .d-flex.align-items-center.gap-2 {
     border-top: 1px solid #22303c;
 }
 
-/* Input message */
+
 .message-app input.form-control {
     background: #22303c;
     color: #fff;
@@ -100,7 +100,7 @@
     box-shadow: 0 0 0 0.25rem rgb(29 161 242 / 0.25);
 }
 
-/* Bouton envoyer */
+
 .message-app button.btn-primary {
     background: #1da1f2;
     color: #fff;
@@ -109,12 +109,12 @@
     background: #1a8cd8;
 }
 
-/* Texte dans la zone de sélection si pas de conversation */
+
 .message-app .text-muted p {
     color: #8899a6 !important;
 }
 
-/* Responsive tweaks */
+
 @media (max-width: 767.98px) {
     .sidebar-message {
         flex-direction: column;

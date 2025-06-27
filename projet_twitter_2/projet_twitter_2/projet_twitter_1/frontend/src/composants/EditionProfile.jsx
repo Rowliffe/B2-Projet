@@ -21,7 +21,7 @@ const EditionProfile = () => {
     const token = localStorage.getItem('token') || sessionStorage.getItem('token');
     const navigate = useNavigate();
 
-    // Fonction de déconnexion
+
     const handleLogout = () => {
         localStorage.removeItem('token');
         sessionStorage.removeItem('token');
@@ -82,9 +82,9 @@ const EditionProfile = () => {
     const handleChange = (e) => {
         const { name, value } = e.target;
         
-        // Validation spéciale pour le champ téléphone : seuls les chiffres sont autorisés
+
         if (name === 'phone') {
-            // Supprimer tous les caractères non-numériques
+
             const numericValue = value.replace(/[^0-9]/g, '');
             setFormData(prev => ({ ...prev, [name]: numericValue }));
         } else {

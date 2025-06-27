@@ -279,7 +279,7 @@
     font-size: 14px;
 }
 
-/* Responsive */
+
 @media (max-width: 900px) {
     .edit-app {
         flex-direction: column;
@@ -324,7 +324,7 @@
     }
 }
 
-/* Edition Profile Component Styles */
+
 .edit-profile-container {
     max-width: 600px;
     margin: 0 auto;
@@ -508,7 +508,7 @@
     color: white;
 }
 
-/* Input validation styles */
+
 .form-input:invalid {
     border-color: #dc3545;
 }
@@ -517,7 +517,7 @@
     border-color: #28a745;
 }
 
-/* Responsive design */
+
 @media (max-width: 768px) {
     .edit-profile-container {
         padding: 15px;
@@ -549,7 +549,7 @@
     }
 }
 
-/* Animation for success/error messages */
+
 @keyframes slideIn {
     from {
         opacity: 0;

@@ -2,9 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Heart, MessageSquare, Repeat2, ArrowUpDown, Send, X } from 'lucide-react';
 import '../styles/home.css';
 
-// Liste complète des mots interdits pour les commentaires
+
 const bannedWords = [
-    // Grossièretés françaises
     "merde", "putain", "con", "connard", "enculé", "salaud", "salopard", "pute", "salope",
     "connasse", "crétin", "débile", "stupide", "abruti", "imbecile", "ordure", "fumier",
     "chier", "foutre", "bordel", "fait chier", "ta gueule", "ferme ta gueule", "casse toi",
@@ -14,27 +13,24 @@ const bannedWords = [
     "dégueulasse", "dégueu", "cochon", "porc", "fils de pute", "fdp", "ta mère",
     "pd", "pédé", "tapette", "tantouze", "gouine", "garce", "pouffiasse",
     
-    // Grossièretés anglaises
     "fuck", "shit", "bitch", "asshole", "damn", "crap", "bastard", "whore",
     "slut", "cunt", "dick", "cock", "pussy", "motherfucker", "bullshit",
     "piss", "jackass", "dumbass", "retard", "idiot", "moron", "stupid",
     "hell", "bloody", "damn it", "shut up", "screw you", "go to hell",
     "son of a bitch", "piece of shit", "get lost", "prick", "douche",
     "wanker", "bollocks", "bugger", "twat", "tosser", "git", "pillock",
-    
-    // Insultes diverses et variantes
+
     "nazi", "fasciste", "raciste", "hitler", "genocide", "kys", "kill yourself",
     "go die", "suicide", "terrorist", "cancer", "aids", "sida", "handicap",
     "autiste", "mongol", "trisomique", "malade mental", "psychopathe",
     "pervers", "violeur", "pédophile", "inceste", "viol", "violer",
     
-    // Variantes avec caractères spéciaux
     "m3rd3", "put41n", "f*ck", "sh*t", "b*tch", "a$$hole", "cr@p",
     "fvck", "shlt", "btch", "merda", "putaln", "fukc", "shjt",
     "m3rde", "put4in", "c0n", "conn4rd", "3nculé", "sal4ud"
 ];
 
-// Fonction pour vérifier les mots interdits
+
 const containsBannedWords = (text) => {
     const lower = text.toLowerCase();
     return bannedWords.some(word => lower.includes(word));
@@ -44,11 +40,11 @@ const HomePosts = () => {
     const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [showComments, setShowComments] = useState({}); // Track which posts have comments visible
-    const [commentText, setCommentText] = useState({}); // Track comment text for each post
-    const [comments, setComments] = useState({}); // Store comments for each post
+    const [showComments, setShowComments] = useState({});
+    const [commentText, setCommentText] = useState({});
+    const [comments, setComments] = useState({}); 
     const [loadingComments, setLoadingComments] = useState({});
-    const [commentErrors, setCommentErrors] = useState({}); // Track moderation errors for comments
+    const [commentErrors, setCommentErrors] = useState({}); 
 
     const token = localStorage.getItem('token') || sessionStorage.getItem('token');
     console.log(token);
@@ -72,7 +68,6 @@ const HomePosts = () => {
                 return res.json();
             })
             .then((data) => {
-                // Le backend retourne déjà les tweets triés par date (plus récents en premier)
                 setPosts(data);
                 setLoading(false);
             })
@@ -92,7 +87,6 @@ const HomePosts = () => {
         })
             .then((res) => res.json())
             .then(() => {
-                // Mise à jour optimiste : inverser l'état et mettre à jour le compteur
                 setPosts(prevPosts =>
                     prevPosts.map(post => {
                         if (post.id === id) {
@@ -123,7 +117,6 @@ const HomePosts = () => {
         })
             .then(res => res.json())
             .then(() => {
-                // Mise à jour optimiste : inverser l'état et mettre à jour le compteur
                 setPosts(prevPosts =>
                     prevPosts.map(post => {
                         if (post.id === id) {
@@ -144,7 +137,7 @@ const HomePosts = () => {
             .catch((err) => console.error('Erreur lors du retweet :', err));
     };
 
-    // Fonction pour formater la date de manière plus lisible
+    
     const formatDate = (dateString) => {
         const date = new Date(dateString);
         const now = new Date();
@@ -166,9 +159,9 @@ const HomePosts = () => {
         }
     };
 
-    // Fonction pour récupérer les commentaires d'un tweet
+
     const loadComments = async (postId) => {
-        if (comments[postId]) return; // Déjà chargés
+        if (comments[postId]) return;
 
         setLoadingComments(prev => ({ ...prev, [postId]: true }));
         
@@ -190,7 +183,7 @@ const HomePosts = () => {
         }
     };
 
-    // Fonction pour toggle l'affichage des commentaires
+
     const toggleComments = (postId) => {
         const isShowing = showComments[postId];
         
@@ -201,15 +194,13 @@ const HomePosts = () => {
         setShowComments(prev => ({ ...prev, [postId]: !isShowing }));
     };
 
-    // Fonction pour soumettre un commentaire
+
     const submitComment = async (postId) => {
         const content = commentText[postId];
         if (!content?.trim()) return;
 
-        // Réinitialiser l'erreur de modération pour ce post
         setCommentErrors(prev => ({ ...prev, [postId]: '' }));
 
-        // Vérification des mots interdits
         if (containsBannedWords(content)) {
             setCommentErrors(prev => ({ 
                 ...prev, 
@@ -230,16 +221,14 @@ const HomePosts = () => {
 
             if (response.ok) {
                 const data = await response.json();
-                // Ajouter le nouveau commentaire à la liste
                 setComments(prev => ({
                     ...prev,
                     [postId]: [...(prev[postId] || []), data.comment]
                 }));
-                
-                // Vider le champ de saisie
+       
                 setCommentText(prev => ({ ...prev, [postId]: '' }));
                 
-                // Mettre à jour le compteur de commentaires
+    
                 setPosts(prevPosts =>
                     prevPosts.map(post =>
                         post.id === postId
@@ -262,7 +251,6 @@ const HomePosts = () => {
                 <div key={post.id} className="post">
                     <div className="post-header">
                         <div className="post-user">
-                            {/* Avatar avec photo réelle ou initiales */}
                             {post.author?.photo ? (
                                 <img 
                                     src={post.author.photo} 
@@ -310,7 +298,6 @@ const HomePosts = () => {
                     </div>
 
                     <div className="post-content">
-                        {/* Titre du tweet */}
                         {post.title && (
                             <h4 style={{
                                 color: 'white',
@@ -322,7 +309,6 @@ const HomePosts = () => {
                             </h4>
                         )}
                         
-                        {/* Contenu du tweet */}
                         {post.content && (
                             <p style={{
                                 color: '#e1e8ed',
@@ -334,7 +320,6 @@ const HomePosts = () => {
                             </p>
                         )}
                         
-                        {/* Image du tweet */}
                         {post.picture && (
                             <img
                                 src={
@@ -429,7 +414,6 @@ const HomePosts = () => {
                                 borderTop: '1px solid #38444d',
                                 paddingTop: '15px'
                             }}>
-                                {/* Zone de saisie de commentaire */}
                                 <div style={{
                                     display: 'flex',
                                     gap: '12px',
@@ -457,7 +441,6 @@ const HomePosts = () => {
                                                     ...prev, 
                                                     [post.id]: e.target.value 
                                                 }));
-                                                // Réinitialiser l'erreur de modération quand l'utilisateur tape
                                                 if (commentErrors[post.id]) {
                                                     setCommentErrors(prev => ({ ...prev, [post.id]: '' }));
                                                 }
@@ -481,7 +464,6 @@ const HomePosts = () => {
                                             }}
                                         />
                                         
-                                        {/* Affichage de l'erreur de modération */}
                                         {commentErrors[post.id] && (
                                             <div style={{
                                                 color: '#f91880',

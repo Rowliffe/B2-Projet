@@ -11,9 +11,9 @@
     justify-content: center;
     position: relative;
     margin-top: 150px;
-    margin-left: 100px; /* Ajusté pour laisser de l'espace pour la sidebar */
+    margin-left: 100px; 
     left: 18vw;
-    height: auto; /* Ajusté pour s'adapter au contenu */
+    height: auto; 
     padding: 0 20px;
     max-width: 400px;
 }
@@ -221,7 +221,7 @@
     word-break: break-word;
 }
 
-/* Responsive ajustement */
+
 @media (max-width: 900px) {
     .app-container {
         flex-direction: column;

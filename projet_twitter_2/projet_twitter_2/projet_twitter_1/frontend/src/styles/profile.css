@@ -1,6 +1,6 @@
-/* No more .twitter-app styles here, as global styles in index.css handle it */
 
-/* Styles for Sidebar (copied from home.css) */
+
+
 .sidebar {
     padding: 20px;
     display: flex;
@@ -40,7 +40,7 @@
     cursor: pointer;
 }
 
-/* Right Sidebar (copied from home.css) */
+
 .right-sidebar {
     padding: 15px;
 }
@@ -98,7 +98,7 @@
     font-size: 14px;
 }
 
-/* Styles for the new Profile component */
+
 .profile-container {
     max-width: 800px;
     margin: 0 auto;
@@ -313,7 +313,7 @@
     color: white;
 }
 
-/* Tweet Card Styles */
+
 .tweet-card {
     background-color: #253341;
     border: 1px solid #38444d;
@@ -436,7 +436,7 @@
     font-weight: 500;
 }
 
-/* Responsive design for tweets */
+
 @media (max-width: 768px) {
     .tweet-card {
         padding: 15px;
@@ -469,7 +469,7 @@
     }
 }
 
-/* Animation for new tweets */
+
 @keyframes slideInTweet {
     from {
         opacity: 0;
@@ -485,7 +485,7 @@
     animation: slideInTweet 0.3s ease-out;
 }
 
-/* Responsive design */
+
 @media (max-width: 768px) {
     .profile-container {
         padding: 15px;
@@ -521,7 +521,7 @@
     }
 }
 
-/* Existing styles adapted for dark theme */
+
 .profile-content-custom {
     flex-grow: 1;
     background-color: #15202b;
@@ -672,7 +672,7 @@
     font-size: 1.1rem;
 }
 
-/* Responsive for profile - adjust existing media queries as needed or remove if handled by grid */
+
 @media (max-width: 768px) {
     .profile-header-custom {
         flex-direction: column;

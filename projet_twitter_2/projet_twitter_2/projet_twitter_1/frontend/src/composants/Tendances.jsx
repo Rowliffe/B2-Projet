@@ -3,13 +3,13 @@ import { Search } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import SharedSidebar from './SharedSidebar.jsx';
 import SharedRightSidebar from './SharedRightSidebar.jsx';
-import '../styles/tendances.css'; // Import your new CSS file
+import '../styles/tendances.css';
 import ResponsiveSidebar from "./ResponsiveSidebar.jsx";
 export default function Tendances() {
     const [activeTab, setActiveTab] = useState('principale');
     const location = useLocation();
 
-    // Mock data for trends
+
     const trends = [
         { id: 1, tag: '#Technologies' },
         { id: 2, tag: '#Technologies' },
@@ -19,8 +19,7 @@ export default function Tendances() {
     ];
 
     useEffect(() => {
-        // Update active tab based on the current location if needed for navigation
-        // For this page, activeTab will be managed internally for tabs like 'Principale', 'Plus récent' etc.
+
     }, [location]);
 
     return (
@@ -31,7 +30,7 @@ export default function Tendances() {
                 </div>
 
                 <div className="col-md-6 col-lg-7">
-                    {/* Main Content for Tendances Page */}
+                   
                     <div className="tendances-search-header">
                         <div className="search-bar">
                             <Search size={20} color="#8899a6" />
@@ -66,7 +65,7 @@ export default function Tendances() {
                     </div>
                 </div>
 
-                <div className="col-md-3 col-lg-3 d-none d-md-block"> {/* Hide on small screens, show on medium and larger */}
+                <div className="col-md-3 col-lg-3 d-none d-md-block"> 
                     <SharedRightSidebar />
                 </div>
                 <ResponsiveSidebar activeTab={activeTab} />

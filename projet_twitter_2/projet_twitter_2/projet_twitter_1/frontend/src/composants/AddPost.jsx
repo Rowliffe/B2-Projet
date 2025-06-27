@@ -4,9 +4,9 @@ import { Home, MessageCircle, Search, Settings, User, X } from "lucide-react";
 import '../styles/addpost.css';
 import ResponsiveSidebar from "./ResponsiveSidebar";
 
-// Liste complète des mots interdits
+
 const bannedWords = [
-    // Grossièretés françaises
+
     "merde", "putain", "con", "connard", "enculé", "salaud", "salopard", "pute", "salope",
     "connasse", "crétin", "débile", "stupide", "abruti", "imbecile", "ordure", "fumier",
     "chier", "foutre", "bordel", "fait chier", "ta gueule", "ferme ta gueule", "casse toi",
@@ -16,21 +16,18 @@ const bannedWords = [
     "dégueulasse", "dégueu", "cochon", "porc", "fils de pute", "fdp", "ta mère",
     "pd", "pédé", "tapette", "tantouze", "gouine", "garce", "pouffiasse",
     
-    // Grossièretés anglaises
     "fuck", "shit", "bitch", "asshole", "damn", "crap", "bastard", "whore",
     "slut", "cunt", "dick", "cock", "pussy", "motherfucker", "bullshit",
     "piss", "jackass", "dumbass", "retard", "idiot", "moron", "stupid",
     "hell", "bloody", "damn it", "shut up", "screw you", "go to hell",
     "son of a bitch", "piece of shit", "get lost", "prick", "douche",
     "wanker", "bollocks", "bugger", "twat", "tosser", "git", "pillock",
-    
-    // Insultes diverses et variantes
+
     "nazi", "fasciste", "raciste", "hitler", "genocide", "kys", "kill yourself",
     "go die", "suicide", "terrorist", "cancer", "aids", "sida", "handicap",
     "autiste", "mongol", "trisomique", "malade mental", "psychopathe",
     "pervers", "violeur", "pédophile", "inceste", "viol", "violer",
     
-    // Variantes avec caractères spéciaux
     "m3rd3", "put41n", "f*ck", "sh*t", "b*tch", "a$$hole", "cr@p",
     "fvck", "shlt", "btch", "merda", "putaln", "fukc", "shjt",
     "m3rde", "put4in", "c0n", "conn4rd", "3nculé", "sal4ud"
@@ -85,7 +82,7 @@ const CreationPost = ({ setText, text, setTitle, title, onPublish, isPublishing,
                         required
                     />
                     
-                    {/* Message d'erreur de modération */}
+                    
                     {moderationError && (
                         <div style={{
                             background: 'rgba(224, 36, 94, 0.1)',
@@ -101,7 +98,7 @@ const CreationPost = ({ setText, text, setTitle, title, onPublish, isPublishing,
                         </div>
                     )}
                     
-                    {/* Champ URL d'image */}
+                
                     <input
                         type="url"
                         className="creation-post-image-url"
@@ -120,7 +117,7 @@ const CreationPost = ({ setText, text, setTitle, title, onPublish, isPublishing,
                         }}
                     />
                     
-                    {/* Aperçu de l'image depuis URL */}
+
                     {imageUrl && (
                         <div style={{
                             position: 'relative',
@@ -230,7 +227,7 @@ const Sidebar = ({ activeTab }) => (
     </div>
 );
 
-// Fonction pour vérifier les mots interdits
+
 const containsBannedWords = (text) => {
     const lower = text.toLowerCase();
     return bannedWords.some(word => lower.includes(word));
@@ -250,7 +247,6 @@ const CreatePost = () => {
 
 
     const handlePublish = async () => {
-        // Réinitialiser l'erreur de modération
         setModerationError("");
 
         if (!title.trim() || !text.trim()) {
@@ -258,7 +254,6 @@ const CreatePost = () => {
             return;
         }
 
-        // Vérification des mots interdits dans le titre et le contenu
         if (containsBannedWords(title) || containsBannedWords(text)) {
             setModerationError("Votre message contient un mot interdit. Merci de modifier votre contenu pour respecter la communauté");
             return;
@@ -306,12 +301,10 @@ const CreatePost = () => {
             const result = await response.json();
             console.log("Tweet créé avec succès:", result);
 
-            // Réinitialiser le formulaire
             setText("");
             setTitle("");
             setImageUrl("");
             
-            // Rediriger vers la page d'accueil
             navigate("/home");
         } catch (error) {
             console.error("Erreur :", error);

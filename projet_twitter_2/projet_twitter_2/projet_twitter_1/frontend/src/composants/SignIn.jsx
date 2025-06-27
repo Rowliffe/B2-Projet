@@ -22,7 +22,7 @@ const RegisterPage = () => {
     const [loading, setLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-    const [step, setStep] = useState(1); // Étapes : 1 = Info de base, 2 = Détails
+    const [step, setStep] = useState(1);
     const navigate = useNavigate();
 
     const handleChange = (e) => {
@@ -32,7 +32,7 @@ const RegisterPage = () => {
             [name]: value
         }));
         
-        // Effacer l'erreur quand l'utilisateur commence à taper
+
         if (errors[name]) {
             setErrors(prev => ({ ...prev, [name]: '' }));
         }
@@ -94,10 +94,10 @@ const RegisterPage = () => {
             const data = await response.json();
 
             if (response.ok) {
-                // Sauvegarder le token
+
                 localStorage.setItem('token', data.token);
                 
-                // Rediriger vers la page d'accueil
+
                 navigate('/home');
             } else {
                 setErrors({ general: data.error || 'Erreur lors de l\'inscription' });
