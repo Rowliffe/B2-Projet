@@ -145,4 +145,15 @@ class Tweet
         }
         return $count;
     }
+
+    public function getCommentsCount($tweets): int
+    {
+        $count = 0;
+        foreach ($tweets as $t) {
+            if ($t->getType() === 'comment' && $t->getIdParent() === $this->getId()) {
+                $count++;
+            }
+        }
+        return $count;
+    }
 }

@@ -27,6 +27,19 @@ html, body {
   min-width: 320px;
   min-height: 100vh;
   width: 100%; /* Ensure html and body take full width */
+  overflow-x: hidden; /* Empêcher le défilement horizontal */
+}
+
+/* Cacher les barres de défilement mais permettre le défilement */
+html {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  width: 0; /* Webkit */
+  background: transparent;
 }
 
 h1 {
@@ -176,6 +189,17 @@ button:focus-visible {
     padding: 0;
     margin: 0;
     overflow-x: hidden;
+}
+
+/* Styles globaux pour cacher toutes les barres de défilement */
+* {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+
+*::-webkit-scrollbar {
+    width: 0;
+    background: transparent; /* Chrome/Safari/Webkit */
 }
 
 

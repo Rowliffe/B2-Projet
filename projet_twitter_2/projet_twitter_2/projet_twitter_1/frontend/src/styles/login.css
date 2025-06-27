@@ -1,20 +1,18 @@
 /* Container principal */
-/* Carte de connexion *
-
-/* Container de l'avatar */
 .login-container {
     min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #f3f4f6;
+    background: #15202b;
     padding: 0;
 }
 
 .login-card {
-    background: #fff;
+    background: #192734;
     border-radius: 18px;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+    box-shadow: 0 4px 24px rgba(0,0,0,0.5);
+    border: 1px solid #38444d;
     padding: 40px 32px 32px 32px;
     width: 100%;
     max-width: 420px;
@@ -32,7 +30,7 @@
 .avatar {
     width: 3rem;
     height: 3rem;
-    background-color: #3b82f6;
+    background-color: #1da1f2;
     border-radius: 0.5rem;
     display: flex;
     align-items: center;
@@ -63,7 +61,7 @@
     display: block;
     font-size: 0.875rem;
     font-weight: 500;
-    color: #374151;
+    color: #e1e8ed;
     margin-bottom: 0.5rem;
 }
 
@@ -71,9 +69,9 @@
 .form-input {
     width: 100%;
     padding: 0.75rem 1rem;
-    background-color: #f3f4f6;
-    border: none;
-    color: black;
+    background-color: #15202b;
+    border: 1px solid #38444d;
+    color: #e1e8ed;
     border-radius: 0.5rem;
     font-size: 1rem;
     transition: all 0.2s ease;
@@ -82,7 +80,8 @@
 
 .form-input:focus {
     outline: none;
-    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+    border-color: #1da1f2;
+    box-shadow: 0 0 0 2px rgba(29, 161, 242, 0.3);
 }
 
 /* Ligne des options */
@@ -90,6 +89,8 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 2rem;
+    padding: 0.5rem 0;
 }
 
 /* Container de la checkbox */
@@ -102,29 +103,35 @@
 .form-checkbox {
     width: 1rem;
     height: 1rem;
-    color: #3b82f6;
-    background-color: #f3f4f6;
-    border: 1px solid #d1d5db;
+    color: #1da1f2;
+    background-color: #15202b;
+    border: 1px solid #38444d;
     border-radius: 0.25rem;
     margin-right: 0.5rem;
     cursor: pointer;
 }
 
 .form-checkbox:focus {
-    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+    box-shadow: 0 0 0 2px rgba(29, 161, 242, 0.3);
 }
 
 /* Label de la checkbox */
 .checkbox-label {
     font-size: 0.875rem;
-    color: #4b5563;
+    color: #8899a6;
+    cursor: pointer;
+}
+
+.checkbox-container label {
+    font-size: 0.875rem;
+    color: #8899a6;
     cursor: pointer;
 }
 
 /* Bouton mot de passe oublié */
 .forgot-password-btn {
     font-size: 0.875rem;
-    color: #3b82f6;
+    color: #1da1f2;
     background: transparent;
     border: none;
     cursor: pointer;
@@ -134,12 +141,13 @@
 
 .forgot-password-btn:hover {
     text-decoration: underline;
+    color: #1da1f2;
 }
 
 /* Bouton de soumission */
 .submit-btn {
     width: 100%;
-    background-color: #3b82f6;
+    background-color: #1da1f2;
     color: white;
     font-weight: 500;
     padding: 0.75rem 1rem;
@@ -151,12 +159,12 @@
 }
 
 .submit-btn:hover {
-    background-color: #2563eb;
+    background-color: #1991db;
 }
 
 .submit-btn:focus {
     outline: none;
-    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5), 0 0 0 4px rgba(59, 130, 246, 0.1);
+    box-shadow: 0 0 0 2px rgba(29, 161, 242, 0.5), 0 0 0 4px rgba(29, 161, 242, 0.1);
 }
 
 /* Responsive */
@@ -171,7 +179,9 @@
 
     .options-row {
         flex-direction: column;
-        gap: 1rem;
-        align-items: flex-start;
+        gap: 1.5rem;
+        align-items: center;
+        text-align: center;
+        padding: 1rem 0;
     }
 }

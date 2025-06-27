@@ -10,22 +10,23 @@ security:
                 class: App\Entity\User
                 property: email
     firewalls:
-        api:
-            pattern: ^/api
-            stateless: true
             # https://symfony.com/doc/current/security/api_key_authentication.html
             # api_key:
             #     header: 'X-API-KEY'
             #     query_parameter: 'api_key'
+        api_login:
+            pattern: ^/api/(login|register|csrf-token)
+            stateless: true
+            security: false
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
-            lazy: true
+            pattern: ^/api
             stateless: true
+            provider: app_user_provider
             jwt: ~
             entry_point: jwt
-            provider: app_user_provider
             form_login:
                 login_path: app_login
                 check_path: app_login
@@ -44,13 +45,15 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-      - { path: ^/inscription, roles: PUBLIC_ACCESS }
-      - { path: ^/login, roles: PUBLIC_ACCESS }
-      - { path: ^/api/tweets, roles: PUBLIC_ACCESS }
-      - { path: ^/api/csrf-token, roles: PUBLIC_ACCESS }
-      - { path: ^/api/, roles: PUBLIC_ACCESS }
-      - { path: ^/api/login, roles: PUBLIC_ACCESS }
-      - { path: ^/, roles: ROLE_USER }
+        - { path: ^/inscription, roles: PUBLIC_ACCESS }
+        - { path: ^/login, roles: PUBLIC_ACCESS }
+        - { path: ^/api/login, roles: PUBLIC_ACCESS }
+        - { path: ^/api/register, roles: PUBLIC_ACCESS }
+        - { path: ^/api/csrf-token, roles: PUBLIC_ACCESS }
+        - { path: ^/api/profile, roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/api/, roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/, roles: ROLE_USER }
+
 
 when@test:
     security:

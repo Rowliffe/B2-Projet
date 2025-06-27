@@ -98,6 +98,429 @@
     font-size: 14px;
 }
 
+/* Styles for the new Profile component */
+.profile-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #15202b;
+    color: white;
+    min-height: 100vh;
+}
+
+.loading {
+    text-align: center;
+    padding: 40px;
+    color: #8899a6;
+}
+
+.error {
+    background-color: #dc3545;
+    color: white;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.profile-header {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    margin-bottom: 30px;
+    padding: 20px;
+    background-color: #192734;
+    border-radius: 15px;
+    border: 1px solid #38444d;
+}
+
+.profile-photo {
+    flex-shrink: 0;
+}
+
+.profile-image {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #1da1f2;
+}
+
+.profile-placeholder {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background-color: #1da1f2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 48px;
+    font-weight: bold;
+    color: white;
+}
+
+.profile-info {
+    flex-grow: 1;
+}
+
+.profile-name {
+    font-size: 28px;
+    font-weight: bold;
+    margin: 0 0 5px 0;
+    color: white;
+}
+
+.profile-pseudo {
+    font-size: 18px;
+    color: #8899a6;
+    margin: 0 0 10px 0;
+}
+
+.profile-bio {
+    font-size: 16px;
+    color: #e1e8ed;
+    margin: 10px 0 0 0;
+    line-height: 1.4;
+}
+
+.profile-actions {
+    flex-shrink: 0;
+}
+
+.edit-profile-btn {
+    background-color: transparent;
+    color: #1da1f2;
+    border: 1px solid #1da1f2;
+    border-radius: 25px;
+    padding: 10px 20px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.2s ease;
+}
+
+.edit-profile-btn:hover {
+    background-color: #1da1f2;
+    color: white;
+}
+
+.profile-details {
+    margin-bottom: 30px;
+}
+
+.profile-stats {
+    display: flex;
+    gap: 30px;
+    margin-bottom: 25px;
+    padding: 20px;
+    background-color: #192734;
+    border-radius: 15px;
+    border: 1px solid #38444d;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.stat-number {
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+}
+
+.stat-label {
+    font-size: 14px;
+    color: #8899a6;
+}
+
+.profile-metadata {
+    background-color: #192734;
+    border-radius: 15px;
+    padding: 20px;
+    border: 1px solid #38444d;
+}
+
+.metadata-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #38444d;
+}
+
+.metadata-item:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.metadata-label {
+    font-weight: bold;
+    color: #8899a6;
+}
+
+.metadata-value {
+    color: white;
+}
+
+.profile-tweets {
+    background-color: #192734;
+    border-radius: 15px;
+    padding: 20px;
+    border: 1px solid #38444d;
+}
+
+.profile-tweets h3 {
+    margin: 0 0 20px 0;
+    color: white;
+    font-size: 20px;
+}
+
+.tweets-placeholder {
+    text-align: center;
+    padding: 40px 20px;
+    color: #8899a6;
+}
+
+.tweets-loading {
+    text-align: center;
+    padding: 40px 20px;
+    color: #8899a6;
+    font-style: italic;
+}
+
+.tweets-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.add-tweet-link {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 10px 20px;
+    background-color: #1da1f2;
+    color: white;
+    text-decoration: none;
+    border-radius: 25px;
+    font-weight: bold;
+    transition: background-color 0.2s ease;
+}
+
+.add-tweet-link:hover {
+    background-color: #1c87db;
+    color: white;
+}
+
+/* Tweet Card Styles */
+.tweet-card {
+    background-color: #253341;
+    border: 1px solid #38444d;
+    border-radius: 12px;
+    padding: 20px;
+    transition: all 0.2s ease;
+}
+
+.tweet-card:hover {
+    background-color: #2a3a47;
+    border-color: #1da1f2;
+}
+
+.tweet-header {
+    margin-bottom: 15px;
+}
+
+.tweet-author {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.tweet-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #1da1f2;
+}
+
+.tweet-avatar-placeholder {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: #1da1f2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+}
+
+.tweet-author-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.tweet-author-name {
+    font-weight: bold;
+    color: white;
+    font-size: 16px;
+}
+
+.tweet-author-pseudo {
+    color: #8899a6;
+    font-size: 14px;
+}
+
+.tweet-date {
+    color: #8899a6;
+    font-size: 13px;
+}
+
+.tweet-content {
+    margin-bottom: 15px;
+}
+
+.tweet-title {
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0 0 8px 0;
+    line-height: 1.3;
+}
+
+.tweet-text {
+    color: #e1e8ed;
+    font-size: 16px;
+    line-height: 1.5;
+    margin: 0 0 12px 0;
+}
+
+.tweet-image {
+    width: 100%;
+    max-height: 300px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-top: 10px;
+}
+
+.tweet-actions {
+    display: flex;
+    gap: 30px;
+    padding-top: 12px;
+    border-top: 1px solid #38444d;
+}
+
+.tweet-stat {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #8899a6;
+    font-size: 14px;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.tweet-stat:hover {
+    color: #1da1f2;
+}
+
+.tweet-stat-icon {
+    font-size: 16px;
+}
+
+.tweet-stat span:last-child {
+    font-weight: 500;
+}
+
+/* Responsive design for tweets */
+@media (max-width: 768px) {
+    .tweet-card {
+        padding: 15px;
+    }
+    
+    .tweet-author {
+        gap: 10px;
+    }
+    
+    .tweet-avatar,
+    .tweet-avatar-placeholder {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .tweet-avatar-placeholder {
+        font-size: 16px;
+    }
+    
+    .tweet-title {
+        font-size: 16px;
+    }
+    
+    .tweet-text {
+        font-size: 15px;
+    }
+    
+    .tweet-actions {
+        gap: 20px;
+    }
+}
+
+/* Animation for new tweets */
+@keyframes slideInTweet {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.tweet-card {
+    animation: slideInTweet 0.3s ease-out;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .profile-container {
+        padding: 15px;
+    }
+    
+    .profile-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+    }
+    
+    .profile-image,
+    .profile-placeholder {
+        width: 100px;
+        height: 100px;
+    }
+    
+    .profile-placeholder {
+        font-size: 40px;
+    }
+    
+    .profile-name {
+        font-size: 24px;
+    }
+    
+    .profile-stats {
+        gap: 20px;
+    }
+    
+    .metadata-item {
+        flex-direction: column;
+        gap: 5px;
+    }
+}
+
 /* Existing styles adapted for dark theme */
 .profile-content-custom {
     flex-grow: 1;

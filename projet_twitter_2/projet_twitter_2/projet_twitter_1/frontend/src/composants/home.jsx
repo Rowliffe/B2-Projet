@@ -36,18 +36,6 @@ export default function TwitterLikeInterface() {
 
             {/* Main Content */}
             <div className="main-content-home pb-5">
-                <div className="header">
-                    <Link to="/decouvrir" className={`header-tab ${activeTab === 'decouvrir' ? 'active' : ''}`}>
-                        Découvrir
-                    </Link>
-                    <Link to="/home" className={`header-tab ${activeTab === 'home' ? 'active' : ''}`}>
-                        Home
-                    </Link>
-                    <Link to="/suivis" className={`header-tab ${activeTab === 'suivis' ? 'active' : ''}`}>
-                        Suivis
-                    </Link>
-                </div>
-
                 {/* Render posts based on the active tab */}
                 <div className="main-content-body">
                     <Outlet />

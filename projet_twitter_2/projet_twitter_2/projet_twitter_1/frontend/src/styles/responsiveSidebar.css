@@ -1,12 +1,5 @@
 .mobile-bottom-nav {
-    position: fixed;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    height: 56px;
-    background: #15202b;
-    border-top: 1px solid #38444d;
-    z-index: 1050;
+    display: none;
 }
 
 .mobile-nav-item {
@@ -25,12 +18,4 @@
     color: #1da1f2;
 }
 
-/* Ajout de padding au contenu en dessous de la navbar mobile */
-@media (max-width: 768px) {
-    .main-content,
-    .profile-content-custom,
-    .app-container,
-    .message-page-center {
-        padding-bottom: 70px; /* Plus que 56px pour être safe */
-    }
-}
+

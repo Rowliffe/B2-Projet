@@ -21,10 +21,6 @@ export default function SharedSidebar() {
                 <Search size={24} />
                 <span>Search</span>
             </Link>
-            <Link to="/settings" className={`sidebar-item${location.pathname === '/settings' ? ' active' : ''}`}>
-                <Settings size={24} />
-                <span>Settings</span>
-            </Link>
             <Link to="/profile" className={`sidebar-item${location.pathname === '/profile' ? ' active' : ''}`}>
                 <User size={24} />
                 <span>Profile</span>

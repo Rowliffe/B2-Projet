@@ -1,176 +1,516 @@
-import React, { useState } from "react";
-import { Home, MessageCircle, Search, Settings, User } from "lucide-react";
-import { Link } from "react-router-dom";
-import ResponsiveSidebar from "./ResponsiveSidebar.jsx";
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, LogOut } from 'lucide-react';
 import '../styles/editionProfile.css';
-import SharedSidebar from "./SharedSidebar.jsx";
 
-const trends = [
-    { id: 1, username: "User 1", followers: "14K" },
-    { id: 2, username: "User 2", followers: "14K" },
-    { id: 3, username: "User 3", followers: "14K" },
-    { id: 4, username: "User 4", followers: "14K" },
-    { id: 5, username: "User 5", followers: "14K" },
-];
+const EditionProfile = () => {
+    const [formData, setFormData] = useState({
+        name: '',
+        lastname: '',
+        pseudo: '',
+        phone: '',
+        bio: '',
+        country: '',
+        photo: '',
+        password: ''
+    });
 
-const Sidebar = () => (
-    <div className="sidebar d-none d-md-flex flex-column p-3 border-end min-vh-100">
-        <div className="sidebar-logo mb-4">
-            <span>L</span>
-        </div>
-        <Link to="/home" className="sidebar-item mb-2">
-            <Home size={24} />
-            <span>Home</span>
-        </Link>
-        <Link to="/messages" className="sidebar-item mb-2">
-            <MessageCircle size={24} />
-            <span>Messages</span>
-        </Link>
-        <Link to="/search" className="sidebar-item mb-2">
-            <Search size={24} />
-            <span>Search</span>
-        </Link>
-        <Link to="/settings" className="sidebar-item mb-2 active">
-            <Settings size={24} />
-            <span>Settings</span>
-        </Link>
-        <Link to="/profile" className="sidebar-item mb-2">
-            <User size={24} />
-            <span>Profile</span>
-        </Link>
-        <button className="add-post-btn btn btn-primary mt-3">ADD A POST</button>
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState('');
+    const [success, setSuccess] = useState('');
+    const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+    const navigate = useNavigate();
+
+    // Fonction de déconnexion
+    const handleLogout = () => {
+        localStorage.removeItem('token');
+        sessionStorage.removeItem('token');
+        navigate('/login');
+    };
+
+    useEffect(() => {
+        console.log('EditionProfile - useEffect start');
+        
+        if (!token) {
+            console.log('No token found, redirecting to login');
+            navigate('/login');
+            return;
+        }
+
+        console.log('Fetching profile data...');
+        fetch('http://localhost:8000/api/profile', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        })
+            .then(res => {
+                console.log('Profile response status:', res.status);
+                if (!res.ok) {
+                    if (res.status === 401) {
+                        localStorage.removeItem('token');
+                        sessionStorage.removeItem('token');
+                        navigate('/login');
+                        throw new Error('Token invalide');
+                    }
+                    throw new Error('Erreur chargement profil');
+                }
+                return res.json();
+            })
+            .then(data => {
+                console.log('Profile data received:', data);
+                setFormData({
+                    name: data.user?.name || '',
+                    lastname: data.user?.lastname || '',
+                    pseudo: data.user?.pseudo || '',
+                    phone: data.user?.phone || '',
+                    bio: data.user?.bio || '',
+                    country: data.user?.country || '',
+                    photo: data.user?.photo || '',
+                    password: ''
+                });
+                setLoading(false);
+            })
+            .catch(err => {
+                console.error('Error loading profile:', err);
+                setError(err.message);
+                setLoading(false);
+            });
+    }, [token, navigate]);
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        
+        // Validation spéciale pour le champ téléphone : seuls les chiffres sont autorisés
+        if (name === 'phone') {
+            // Supprimer tous les caractères non-numériques
+            const numericValue = value.replace(/[^0-9]/g, '');
+            setFormData(prev => ({ ...prev, [name]: numericValue }));
+        } else {
+            setFormData(prev => ({ ...prev, [name]: value }));
+        }
+        
+        setError('');
+        setSuccess('');
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setError('');
+        setSuccess('');
+
+        console.log('Submitting form data:', formData);
+
+        try {
+            const res = await fetch('http://localhost:8000/api/profile/edit', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            });
+
+            console.log('Update response status:', res.status);
+            const data = await res.json();
+            console.log('Update response data:', data);
+
+            if (!res.ok) {
+                throw new Error(data.error || 'Erreur lors de la mise à jour');
+            }
+
+            setSuccess('Profil mis à jour avec succès !');
+            setTimeout(() => {
+                navigate('/profile');
+            }, 2000);
+        } catch (err) {
+            console.error('Error updating profile:', err);
+            setError(err.message);
+        }
+    };
+
+    console.log('EditionProfile render - loading:', loading, 'error:', error);
+
+    if (loading) {
+        return (
+            <div style={{ 
+                padding: '20px', 
+                textAlign: 'center', 
+                color: 'white', 
+                backgroundColor: '#15202b',
+                minHeight: '100vh'
+            }}>
+                Chargement...
     </div>
 );
-
-const RightSidebar = () => (
-    <div className="right-sidebar d-none d-lg-block border-start p-3 min-vh-100">
-        <div className="search-bar mb-4 d-flex align-items-center">
-            <Search size={20} color="#8899a6" className="me-2" />
-            <input className="form-control" placeholder="Search something" />
-        </div>
-        <div className="trends-container">
-            <div className="trends-header fw-bold mb-3">Trends</div>
-            {trends.map((trend) => (
-                <div key={trend.id} className="trend-item d-flex align-items-center mb-3">
-                    <div className="trend-avatar rounded-circle bg-secondary me-2" style={{ width: 32, height: 32 }}></div>
-                    <div className="trend-user">
-                        <div>{trend.username}</div>
-                        <div className="followers text-muted small">{trend.followers} followers</div>
-                    </div>
-                </div>
-            ))}
-        </div>
-    </div>
-);
-
-const ProfileEditCenter = () => {
-    const [username, setUsername] = useState("@User_1");
-    const [email, setEmail] = useState("user@email.com");
-    const [bio, setBio] = useState("");
-    const [darkMode, setDarkMode] = useState(false);
-    const [notifEmail, setNotifEmail] = useState(true);
+    }
 
     return (
-        <div className="profile-content-custom py-4">
-            <div className="profile-header-custom text-center mb-4">
-                <div className="profile-pic mx-auto mb-2">
-                    <i className="bi bi-person display-4" />
+        <div style={{ 
+            backgroundColor: '#15202b', 
+            color: 'white', 
+            minHeight: '100vh',
+            padding: '20px'
+        }}>
+            {/* Boutons de navigation */}
+            <div style={{
+                position: 'fixed',
+                top: '0',
+                left: '0',
+                right: '0',
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                zIndex: 1000,
+                backgroundColor: 'rgba(21, 32, 43, 0.98)',
+                padding: '15px 30px',
+                borderBottom: '1px solid #38444d',
+                backdropFilter: 'blur(15px)',
+                boxShadow: '0 2px 10px rgba(0, 0, 0, 0.3)'
+            }}>
+                <button
+                    onClick={() => navigate('/profile')}
+                    style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '8px',
+                        backgroundColor: 'transparent',
+                        border: '1px solid #1da1f2',
+                        color: '#1da1f2',
+                        padding: '8px 16px',
+                        borderRadius: '20px',
+                        cursor: 'pointer',
+                        fontSize: '14px',
+                        fontWeight: '500',
+                        transition: 'all 0.2s ease'
+                    }}
+                    onMouseOver={(e) => {
+                        e.target.style.backgroundColor = 'rgba(29, 161, 242, 0.1)';
+                    }}
+                    onMouseOut={(e) => {
+                        e.target.style.backgroundColor = 'transparent';
+                    }}
+                >
+                    <ArrowLeft size={16} />
+                    Retour au profil
+                </button>
+
+                <button
+                    onClick={handleLogout}
+                    style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '8px',
+                        backgroundColor: 'transparent',
+                        border: '1px solid #e0245e',
+                        color: '#e0245e',
+                        padding: '8px 16px',
+                        borderRadius: '20px',
+                        cursor: 'pointer',
+                        fontSize: '14px',
+                        fontWeight: '500',
+                        transition: 'all 0.2s ease'
+                    }}
+                    onMouseOver={(e) => {
+                        e.target.style.backgroundColor = 'rgba(224, 36, 94, 0.1)';
+                    }}
+                    onMouseOut={(e) => {
+                        e.target.style.backgroundColor = 'transparent';
+                    }}
+                >
+                    <LogOut size={16} />
+                    Déconnexion
+                </button>
+            </div>
+
+            <div style={{ maxWidth: '600px', margin: '0 auto', paddingTop: '100px' }}>
+                <div style={{ 
+                    display: 'flex', 
+                    justifyContent: 'center', 
+                    alignItems: 'center', 
+                    marginBottom: '30px',
+                    paddingBottom: '20px',
+                    borderBottom: '1px solid #38444d'
+                }}>
+                    <h2 style={{ margin: 0, fontSize: '24px', fontWeight: 'bold' }}>
+                        Modifier mon profil
+                    </h2>
                 </div>
-                <div className="profile-user-row d-flex flex-column align-items-center">
-                    <span className="profile-username fw-bold">{username}</span>
-                    <button className="profile-edit-btn btn btn-outline-secondary btn-sm mt-2">Changer la photo</button>
+
+                {error && (
+                    <div style={{
+                        backgroundColor: '#dc3545',
+                        color: 'white',
+                        padding: '15px',
+                        borderRadius: '8px',
+                        marginBottom: '20px',
+                        textAlign: 'center'
+                    }}>
+                        {error}
+        </div>
+                )}
+                
+                {success && (
+                    <div style={{
+                        backgroundColor: '#28a745',
+                        color: 'white',
+                        padding: '15px',
+                        borderRadius: '8px',
+                        marginBottom: '20px',
+                        textAlign: 'center'
+                    }}>
+                        {success}
+                    </div>
+                )}
+
+                <form onSubmit={handleSubmit} style={{
+                    backgroundColor: '#192734',
+                    borderRadius: '15px',
+                    padding: '30px',
+                    border: '1px solid #38444d'
+                }}>
+                    <div style={{ display: 'flex', gap: '20px', marginBottom: '20px' }}>
+                        <div style={{ flex: 1 }}>
+                            <label style={{ display: 'block', marginBottom: '8px', fontWeight: '500' }}>
+                                Nom *
+                            </label>
+                            <input
+                                type="text"
+                                name="name"
+                                value={formData.name}
+                                onChange={handleChange}
+                                required
+                                style={{
+                                    width: '100%',
+                                    padding: '12px 16px',
+                                    backgroundColor: '#253341',
+                                    border: '1px solid #38444d',
+                                    borderRadius: '8px',
+                                    color: 'white',
+                                    fontSize: '16px',
+                                    boxSizing: 'border-box'
+                                }}
+                            />
+                </div>
+                        <div style={{ flex: 1 }}>
+                            <label style={{ display: 'block', marginBottom: '8px', fontWeight: '500' }}>
+                                Prénom *
+                            </label>
+                            <input
+                                type="text"
+                                name="lastname"
+                                value={formData.lastname}
+                                onChange={handleChange}
+                                required
+                                style={{
+                                    width: '100%',
+                                    padding: '12px 16px',
+                                    backgroundColor: '#253341',
+                                    border: '1px solid #38444d',
+                                    borderRadius: '8px',
+                                    color: 'white',
+                                    fontSize: '16px',
+                                    boxSizing: 'border-box'
+                                }}
+                            />
+        </div>
+    </div>
+
+                    <div style={{ display: 'flex', gap: '20px', marginBottom: '20px' }}>
+                        <div style={{ flex: 1 }}>
+                            <label style={{ display: 'block', marginBottom: '8px', fontWeight: '500' }}>
+                                Pseudo *
+                            </label>
+                            <input
+                                type="text"
+                                name="pseudo"
+                                value={formData.pseudo}
+                                onChange={handleChange}
+                                required
+                                style={{
+                                    width: '100%',
+                                    padding: '12px 16px',
+                                    backgroundColor: '#253341',
+                                    border: '1px solid #38444d',
+                                    borderRadius: '8px',
+                                    color: 'white',
+                                    fontSize: '16px',
+                                    boxSizing: 'border-box'
+                                }}
+                            />
+                </div>
+                        <div style={{ flex: 1 }}>
+                            <label style={{ display: 'block', marginBottom: '8px', fontWeight: '500' }}>
+                                Téléphone
+                            </label>
+                            <input
+                                type="tel"
+                                name="phone"
+                                value={formData.phone}
+                                onChange={handleChange}
+                                placeholder="0123456789"
+                                pattern="[0-9]*"
+                                inputMode="numeric"
+                                maxLength="15"
+                                style={{
+                                    width: '100%',
+                                    padding: '12px 16px',
+                                    backgroundColor: '#253341',
+                                    border: '1px solid #38444d',
+                                    borderRadius: '8px',
+                                    color: 'white',
+                                    fontSize: '16px',
+                                    boxSizing: 'border-box'
+                                }}
+                            />
                 </div>
             </div>
 
-            <form className="edition-profile-main" style={{ maxWidth: 500, margin: "0 auto" }}>
-                <div className="row mb-3">
-                    <div className="col-12">
-                        <label className="form-label">Nom d'utilisateur</label>
+                    <div style={{ marginBottom: '20px' }}>
+                        <label style={{ display: 'block', marginBottom: '8px', fontWeight: '500' }}>
+                            Biographie
+                        </label>
+                        <textarea
+                            name="bio"
+                            value={formData.bio}
+                            onChange={handleChange}
+                            maxLength="160"
+                            placeholder="Parlez-nous de vous..."
+                            style={{
+                                width: '100%',
+                                padding: '12px 16px',
+                                backgroundColor: '#253341',
+                                border: '1px solid #38444d',
+                                borderRadius: '8px',
+                                color: 'white',
+                                fontSize: '16px',
+                                minHeight: '80px',
+                                fontFamily: 'inherit',
+                                resize: 'vertical',
+                                boxSizing: 'border-box'
+                            }}
+                        />
+                        <small style={{ color: '#8899a6', fontSize: '12px' }}>
+                            {formData.bio.length}/160
+                        </small>
+                    </div>
+
+                    <div style={{ marginBottom: '20px' }}>
+                        <label style={{ display: 'block', marginBottom: '8px', fontWeight: '500' }}>
+                            Pays *
+                        </label>
                         <input
                             type="text"
-                            className="form-control"
-                            value={username}
-                            onChange={e => setUsername(e.target.value)}
+                            name="country"
+                            value={formData.country}
+                            onChange={handleChange}
+                            required
+                            style={{
+                                width: '100%',
+                                padding: '12px 16px',
+                                backgroundColor: '#253341',
+                                border: '1px solid #38444d',
+                                borderRadius: '8px',
+                                color: 'white',
+                                fontSize: '16px',
+                                boxSizing: 'border-box'
+                            }}
                         />
                     </div>
-                </div>
-                <div className="row mb-3">
-                    <div className="col-12">
-                        <label className="form-label">Adresse email</label>
+
+                    <div style={{ marginBottom: '20px' }}>
+                        <label style={{ display: 'block', marginBottom: '8px', fontWeight: '500' }}>
+                            URL Photo de profil
+                        </label>
                         <input
-                            type="email"
-                            className="form-control"
-                            value={email}
-                            onChange={e => setEmail(e.target.value)}
+                            type="url"
+                            name="photo"
+                            value={formData.photo}
+                            onChange={handleChange}
+                            placeholder="https://example.com/photo.jpg"
+                            style={{
+                                width: '100%',
+                                padding: '12px 16px',
+                                backgroundColor: '#253341',
+                                border: '1px solid #38444d',
+                                borderRadius: '8px',
+                                color: 'white',
+                                fontSize: '16px',
+                                boxSizing: 'border-box'
+                            }}
                         />
                     </div>
-                </div>
-                <div className="row mb-3">
-                    <div className="col-12">
-                        <label className="form-label">Bio</label>
-                        <textarea
-                            className="form-control"
-                            value={bio}
-                            onChange={e => setBio(e.target.value)}
+
+                    <div style={{ marginBottom: '30px' }}>
+                        <label style={{ display: 'block', marginBottom: '8px', fontWeight: '500' }}>
+                            Nouveau mot de passe
+                        </label>
+                        <input
+                            type="password"
+                            name="password"
+                            value={formData.password}
+                            onChange={handleChange}
+                            placeholder="Laisser vide pour ne pas changer"
+                            style={{
+                                width: '100%',
+                                padding: '12px 16px',
+                                backgroundColor: '#253341',
+                                border: '1px solid #38444d',
+                                borderRadius: '8px',
+                                color: 'white',
+                                fontSize: '16px',
+                                boxSizing: 'border-box'
+                            }}
                         />
+                        <small style={{ color: '#8899a6', fontSize: '12px' }}>
+                            Laisser vide si vous ne souhaitez pas modifier votre mot de passe
+                        </small>
                     </div>
-                </div>
-                <div className="card mb-3">
-                    <div className="card-body">
-                        <div className="mb-3">
-                            <div className="form-check form-switch d-flex justify-content-between align-items-center">
-                                <div>
-                                    <div className="form-label mb-0">Mode sombre</div>
-                                    <small className="text-muted">Ajuster l'apparence de l'application</small>
-                                </div>
-                                <input
-                                    className="form-check-input"
-                                    type="checkbox"
-                                    checked={darkMode}
-                                    onChange={() => setDarkMode(!darkMode)}
-                                />
-                            </div>
-                        </div>
-                        <div>
-                            <div className="form-check form-switch d-flex justify-content-between align-items-center">
-                                <div>
-                                    <div className="form-label mb-0">Notifications Emails</div>
-                                    <small className="text-muted">Recevoir des notifications par email</small>
-                                </div>
-                                <input
-                                    className="form-check-input"
-                                    type="checkbox"
-                                    checked={notifEmail}
-                                    onChange={() => setNotifEmail(!notifEmail)}
-                                />
-                            </div>
-                        </div>
+
+                    <div style={{ 
+                        display: 'flex', 
+                        gap: '15px', 
+                        justifyContent: 'flex-end',
+                        paddingTop: '20px',
+                        borderTop: '1px solid #38444d'
+                    }}>
+                        <button 
+                            type="submit"
+                            style={{
+                                backgroundColor: '#1da1f2',
+                                color: 'white',
+                                border: 'none',
+                                borderRadius: '25px',
+                                padding: '12px 24px',
+                                fontWeight: 'bold',
+                                cursor: 'pointer',
+                                fontSize: '16px'
+                            }}
+                        >
+                            Sauvegarder les modifications
+                        </button>
+                        <button 
+                            type="button" 
+                            onClick={() => navigate('/profile')}
+                            style={{
+                                backgroundColor: 'transparent',
+                                color: '#8899a6',
+                                border: '1px solid #38444d',
+                                borderRadius: '25px',
+                                padding: '12px 24px',
+                                fontWeight: 'bold',
+                                cursor: 'pointer',
+                                fontSize: '16px'
+                            }}
+                        >
+                            Annuler
+                        </button>
                     </div>
+                </form>
                 </div>
-                <button type="submit" className="btn btn-primary w-100">
-                    Enregistrer
-                </button>
-            </form>
         </div>
     );
 };
-
-const EditionProfile = () => (
-    <div className="container-profile ">
-        <div className="row min-vh-100">
-            <div className="col-md-2 p-0">
-                <SharedSidebar />
-            </div>
-            <main className="col-12 col-md-8 col-lg-6 d-flex align-items-center justify-content-center min-vh-100">
-                <ProfileEditCenter />
-            </main>
-            <div className="col-lg-4 p-0">
-                <RightSidebar />
-            </div>
-            <ResponsiveSidebar activeItem="settings" />
-        </div>
-    </div>
-);
-
 
 export default EditionProfile;
